@@ -12,7 +12,8 @@ function init() {
  
   //* game variables
   const ships = [2, 3, 3, 4, 5]
-  const ship1 = []
+  const ship = []
+  
 
 
     
@@ -29,8 +30,8 @@ function init() {
 
 
 
-  //* CREATING A 5 length SHIP ----------------------------
-  function createShip(squares) {
+  //* CREATING A SHIP ----------------------------
+  function createShip(numOfSquaresToFill) {
     //* horizontal or vertical?
     function horizontalOrVertical() {
       const num = Math.floor(Math.random() * 2)
@@ -44,34 +45,40 @@ function init() {
     //* creating verticle ship
     function createVerticalShip() {
 
-      const num = (Math.floor(Math.random() * cells.length) - ((squares * 10) + 10))
-      console.log(num)
-      // for (let i = 0; i < squares; i++) {
-      //   ship1.push(num += 10)
-      // }
-      for (let i = 0; i < ship1.length; i++) {
-        cells[ship1[i]].classList.add('ship')
+      let num = Math.floor(Math.random() * (cells.length - ((numOfSquaresToFill * width) + 10)))
+      for (let i = 0; i < numOfSquaresToFill; i++) {
+        ship.push(num)
+        num = num + 10
+      }  
+      for (let i = 0; i < ship.length; i++) {
+        cells[ship[i]].classList.add('ship')
       }
+      console.log(`my vertical element is ${numOfSquaresToFill} squares long`)
     }
+
 
     //* creating horizontal ship
     function createHorizontalShip() {
       const newArray = []
       for (let i = 0; i < cells.length; i++){
-        if (i % width < 6) {
+        if (i % width < (width - (numOfSquaresToFill - 1))) {
           newArray.push(i)
-        }
+        }  
       }
-      const num = Math.floor(Math.random() * newArray.length)
-      ship1.push(newArray[num])
-      ship1.push(newArray[num] + 1)
-      ship1.push(newArray[num] + 2)
-      ship1.push(newArray[num] + 3)
-      ship1.push(newArray[num] + 4)
-      for (let i = 0; i < ship1.length; i++) {
-        cells[ship1[i]].classList.add('ship')
+      let num = Math.floor(Math.random() * newArray.length)
+
+      console.log(newArray[num])
+      
+      for (let i = 0; i < numOfSquaresToFill; i++) {
+        ship.push(newArray[num])
+        num++
+      }  
+      console.log(ship)
+      
+      for (let i = 0; i < ship.length; i++) {
+        cells[ship[i]].classList.add('ship')
       }
-      console.log(`my horizontal element is ${squares} squares long`)
+      console.log(`my horizontal element is ${numOfSquaresToFill} squares long`)
     }
     horizontalOrVertical()
   }
