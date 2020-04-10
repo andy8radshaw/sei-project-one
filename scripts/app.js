@@ -11,7 +11,8 @@ function init() {
  
   //* game variables
   const ships = {
-    submarine: []
+    ship1: []
+
   }
     
  
@@ -39,21 +40,35 @@ function init() {
     //* creating verticle ship
 
     function createVerticalShip() {
-      const num = Math.floor(Math.random() * 69)
-      ships.submarine.push(num)
-      ships.submarine.push(num + 10)
-      ships.submarine.push(num + 20)
-      ships.submarine.push(num + 30)
-      for (let i = 0; i < ships.submarine.length; i++) {
-        cells[ships.submarine[i]].classList.add('ship')
+      const num = Math.floor(Math.random() * 59)
+      ships.ship1.push(num)
+      ships.ship1.push(num + 10)
+      ships.ship1.push(num + 20)
+      ships.ship1.push(num + 30)
+      ships.ship1.push(num + 40)
+      for (let i = 0; i < ships.ship1.length; i++) {
+        cells[ships.ship1[i]].classList.add('ship')
       }
     }
 
     //* creating horizontal ship
 
     function createHorizontalShip() {
-      // Math.floor(Math.Random() * 69)
-      console.log('I am creating a Horizontal ship')
+      const newArray = []
+      for (let i = 0; i < cells.length; i++){
+        if (i % width < 6) {
+          newArray.push(i)
+        }
+      }
+      const num = Math.floor(Math.random() * newArray.length)
+      ships.ship1.push(newArray[num])
+      ships.ship1.push(newArray[num] + 1)
+      ships.ship1.push(newArray[num] + 2)
+      ships.ship1.push(newArray[num] + 3)
+      ships.ship1.push(newArray[num] + 4)
+      for (let i = 0; i < ships.ship1.length; i++) {
+        cells[ships.ship1[i]].classList.add('ship')
+      }
     }
 
     horizontalOrVertical()
