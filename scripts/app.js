@@ -3,7 +3,8 @@ function init() {
   // * Dom elements
   const grid = document.querySelector('.grid')
   const cells = []
-  const randomize = document.querySelector('#random-generate')
+  const randomizeShipsBtn = document.querySelector('#randomize-ships')
+  
  
   //* grid variables
   const width = 10
@@ -46,7 +47,6 @@ function init() {
   ]
   
 
-
     
   // * CREATING THE GRID ----------------------------
   function createGrid() {
@@ -78,17 +78,24 @@ function init() {
 
     //* creating verticle ship
     function createVerticalShip() {
-      let num = Math.floor(Math.random() * (cells.length - ((numOfSquaresToFill * width) + 10)))
+      let num = Math.floor(Math.random() * (cells.length - ((numOfSquaresToFill * width) + 10)))    
       for (let i = 0; i < numOfSquaresToFill; i++) {
         ship[shipIndex].location.push(num)
         num = num + 10
       }  
-      console.log(ship[shipIndex].location)
+      // console.log(ship[shipIndex].location)
+
+      for (let i = 0; i < ship.length; i++) {
+        ship[i].location.forEach(element => {
+          console.log(element)
+          
+        })
+      }
       
       for (let i = 0; i < ship[shipIndex].size; i++) {
         cells[ship[shipIndex].location[i]].classList.add('ship')
       }
-      console.log(`my vertical element is ${numOfSquaresToFill} squares long`)
+      // console.log(`my vertical element is ${numOfSquaresToFill} squares long`)
     }
 
 
@@ -106,20 +113,17 @@ function init() {
         ship[shipIndex].location.push(newArray[num])
         newArray[num]++
       }  
-      console.log(ship[shipIndex].location)
+      // console.log(ship[shipIndex].location)
       
       for (let i = 0; i < ship[shipIndex].size; i++) {
         cells[ship[shipIndex].location[i]].classList.add('ship')
       }
-      console.log(`my horizontal element is ${numOfSquaresToFill} squares long`)
+      // console.log(`my horizontal element is ${numOfSquaresToFill} squares long`)
     }
-
-
     horizontalOrVertical()
   }
 
-  //* CREATING MULTIPLE SHIPS -----------------
-
+  //* CREATING MULTIPLE SHIPS -------------------------------
   function createAllShips() {
     ships.forEach((currentValue, index) => {
       createShip(currentValue, index)
@@ -127,22 +131,26 @@ function init() {
   }
 
 
-  //* RAMDOM BUTTON FOR P1
-  function randomShips() {
-    // for (let i = 0; i < ship1.length; i++){
-    //   console.log(allGridDivs) 
-    // }
+  //* BUTTON CONTROLLERS -----------------------------------
+  //* Randomize ships button
+  function randomizeAllShips() {
+    const wholeGridCells = document.querySelectorAll('.whole-grid')
+    wholeGridCells.forEach(element => {
+      element.classList.remove('ship')
+    })
+    for (let i = 0; i < ships.length; i++) {
+      ship[i].location = []
+    }
+    createAllShips()
   }
 
 
-
-
   createGrid()
-  createAllShips()
+  
 
 
   //* event listeners
-  randomize.addEventListener('click', randomShips)
+  randomizeShipsBtn.addEventListener('click', randomizeAllShips)
 
 
 
