@@ -4,13 +4,14 @@ function init() {
   const grid = document.querySelector('.grid')
   const cells = []
   const randomizeShipsBtn = document.querySelector('#randomize-ships')
-  
- 
+
+
   //* grid variables
   const width = 10
   const cellCount = width * width
- 
- 
+
+  let reservedSpaces = []
+
   //* game variables
   const ships = [2, 3, 4, 5, 6]
   const ship = [
@@ -45,9 +46,9 @@ function init() {
       isSunk: false
     }
   ]
-  
 
-    
+
+
   // * CREATING THE GRID ----------------------------
   function createGrid() {
     for (let i = 0; i < cellCount; i++) {
@@ -68,59 +69,103 @@ function init() {
     //* horizontal or vertical?
     function horizontalOrVertical() {
       const num = Math.floor(Math.random() * 2)
+      
       if (num === 0) {
         createVerticalShip()
       } else {
-        createHorizontalShip()
+        createHorizontalShip() // currently calling vertical ship again for testing, you need to change this back
       }
     }
 
 
     //* creating verticle ship
     function createVerticalShip() {
-      let num = Math.floor(Math.random() * (cells.length - ((numOfSquaresToFill * width) + 10)))    
-      for (let i = 0; i < numOfSquaresToFill; i++) {
-        ship[shipIndex].location.push(num)
-        num = num + 10
-      }  
-      // console.log(ship[shipIndex].location)
-
-      for (let i = 0; i < ship.length; i++) {
-        ship[i].location.forEach(element => {
-          console.log(element)
-          
-        })
-      }
+      //generate starting number
+      const startingPoint = Math.floor(Math.random() * (cells.length - ((numOfSquaresToFill * width) + 10)))
       
-      for (let i = 0; i < ship[shipIndex].size; i++) {
-        cells[ship[shipIndex].location[i]].classList.add('ship')
+      // while random number is a reserved number, regenerate
+      if (reservedSpaces.includes(startingPoint)) {
+        return createShip(numOfSquaresToFill, shipIndex)
+      } 
+      //this variable holds the starting point initially and then the next index is added in the loop below
+      const currentShip = [startingPoint]
+    
+    
+      // calculate rest of ship and put into current ship array
+      for (let i = 1; i < numOfSquaresToFill; i++) {
+        const shipBodyPart = startingPoint + (10 * i)
+        if (reservedSpaces.includes(shipBodyPart)) {
+          // if any part of the body is in reserved space, redo function (without having stored anything!)
+          return createShip(numOfSquaresToFill, shipIndex)
+        } else {
+          currentShip.push(shipBodyPart)
+        }
       }
-      // console.log(`my vertical element is ${numOfSquaresToFill} squares long`)
+      console.log('currentShip 112', currentShip)
+      ship[shipIndex].location = currentShip //add current ship to the ship object
+     
+      for (let i = 0; i < ship[shipIndex].location.length; i++) {
+        console.log('cells[ship[shipIndex].location[i]]', cells[ship[shipIndex].location[i]])
+        cells[ship[shipIndex].location[i]].classList.add('ship')
+        //add index to reserved spaces array
+        reservedSpaces.push(ship[shipIndex].location[i])
+        
+      }
     }
+  
+    // console.log(`my vertical element is ${numOfSquaresToFill} squares long`)
+
+
 
 
     //* creating horizontal ship
     function createHorizontalShip() {
+      // create array of suitable starting numbers to choose from
       const newArray = []
-      for (let i = 0; i < cells.length; i++){
+      for (let i = 0; i < cells.length; i++) {
         if (i % width < (width - (numOfSquaresToFill - 1))) {
           newArray.push(i)
-        }  
+        }
       }
-      const num = Math.floor(Math.random() * newArray.length)
+      // generate starting index and starting number from above array
+      const startingPointIndex = Math.floor(Math.random() * newArray.length)
+      const startingPoint = newArray[startingPointIndex]
 
-      for (let i = 0; i < numOfSquaresToFill; i++) {
-        ship[shipIndex].location.push(newArray[num])
-        newArray[num]++
-      }  
-      // console.log(ship[shipIndex].location)
+      console.log(numOfSquaresToFill, startingPoint, newArray)
       
+
+      // while random number is a reserved number, regenerate
+      if (reservedSpaces.includes(startingPoint)) {
+        return createShip(numOfSquaresToFill, shipIndex)
+      }
+
+      // this variable holds the starting point initially and then the next index is added in the loop below
+      const currentShip = [startingPoint]
+      console.log(currentShip)
+      
+
+      //calculate the rest of the ship and put into the current array
+      for (let i = 1; i < numOfSquaresToFill; i++) {
+        const shipBodyPart = startingPoint + (1 * i)
+        if (reservedSpaces.includes(shipBodyPart)) {
+          // if any part of the body is in reserved space, redo function (without having stored anything!)
+          return createShip(numOfSquaresToFill, shipIndex)
+        } else {
+          currentShip.push(shipBodyPart)
+        }
+      }
+      
+      //add the current ship to the ship object
+      ship[shipIndex].location = currentShip
+
       for (let i = 0; i < ship[shipIndex].size; i++) {
         cells[ship[shipIndex].location[i]].classList.add('ship')
+        reservedSpaces.push(ship[shipIndex].location[i])
       }
-      // console.log(`my horizontal element is ${numOfSquaresToFill} squares long`)
+      console.log(`my horizontal element is ${numOfSquaresToFill} squares long`)
     }
     horizontalOrVertical()
+    console.log('reservedSpaces', reservedSpaces)
   }
 
   //* CREATING MULTIPLE SHIPS -------------------------------
@@ -134,6 +179,8 @@ function init() {
   //* BUTTON CONTROLLERS -----------------------------------
   //* Randomize ships button
   function randomizeAllShips() {
+    //set reserved spaces back to an empty array for a new board of ships
+    reservedSpaces = []
     const wholeGridCells = document.querySelectorAll('.whole-grid')
     wholeGridCells.forEach(element => {
       element.classList.remove('ship')
@@ -146,7 +193,7 @@ function init() {
 
 
   createGrid()
-  
+
 
 
   //* event listeners
