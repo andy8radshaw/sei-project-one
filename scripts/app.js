@@ -374,18 +374,20 @@ function init() {
       } else {
         shotsTaken.push(bombDropLocation)
         if (cellsPlayer[bombDropLocation].classList.contains('ship')) {
-          gameMessages.textContent = 'COMPUTER hit a ship! Players turn next'
+          
           cellsPlayer[bombDropLocation].classList.remove('ship')
           cellsPlayer[bombDropLocation].classList.add('ship-hit')
+          gameMessages.textContent = 'COMPUTER hit a ship! Players turn next'
           //!add AUDIO HERE BOMB-HIT
           droppingPlayerBombs()
+        } else {
+          cellsPlayer[bombDropLocation].classList.add('missed-shot')
+          gameMessages.textContent = 'COMPUTER missed, Players turn'
+          console.log(bombDropLocation)
+          console.log(shotsTaken)
+          //!add AUDIO HERE SPLASH
+          droppingPlayerBombs()
         }
-        cellsPlayer[bombDropLocation].classList.add('missed-shot')
-        gameMessages.textContent = 'COMPUTER missed, Players turn'
-        console.log(bombDropLocation)
-        console.log(shotsTaken)
-        //!add AUDIO HERE SPLASH
-        droppingPlayerBombs()
       }
       isPlaying = false
     }
