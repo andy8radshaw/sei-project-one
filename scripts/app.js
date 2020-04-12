@@ -116,7 +116,7 @@ function init() {
     //* horizontal or vertical?
     function horizontalOrVertical() {
       const num = Math.floor(Math.random() * 2)
-      
+
       if (num === 0) {
         createVerticalShip()
       } else {
@@ -131,7 +131,7 @@ function init() {
       // while random number is a reserved number, regenerate
       if (reservedSpaces.includes(startingPoint)) {
         return createShip(numOfSquaresToFill, shipIndex)
-      } 
+      }
       //this variable holds the starting point initially and then the next index is added in the loop below
       const currentShip = [startingPoint]
       // calculate rest of ship and put into current ship array
@@ -149,7 +149,7 @@ function init() {
         cellsPlayer[ship[shipIndex].location[i]].classList.add('ship')
         //add index to reserved spaces array
         reservedSpaces.push(ship[shipIndex].location[i])
-        
+
       }
     }
     //* creating horizontal ship
@@ -205,7 +205,7 @@ function init() {
     //* horizontal or vertical?
     function horizontalOrVertical() {
       const num = Math.floor(Math.random() * 2)
-      
+
       if (num === 0) {
         createVerticalShip()
       } else {
@@ -220,7 +220,7 @@ function init() {
       // while random number is a reserved number, regenerate
       if (reservedSpaces.includes(startingPoint)) {
         return createCompShip(numOfSquaresToFill, shipIndex)
-      } 
+      }
       //this variable holds the starting point initially and then the next index is added in the loop below
       const currentShip = [startingPoint]
       // calculate rest of ship and put into current ship array
@@ -238,7 +238,7 @@ function init() {
         cellsComp[compShip[shipIndex].location[i]].classList.add('comp-ship')
         //add index to reserved spaces array
         reservedSpaces.push(compShip[shipIndex].location[i])
-        
+
       }
     }
     //* creating horizontal ship
@@ -302,51 +302,82 @@ function init() {
     }
     createAllShips()
   }
-  
+
 
   // ! GAMEPLAY ------------------------------------------------------------------------
 
-  function whoGoesFirst() {
-    // const num = Math.floor(Math.random() * 2)
-    const num = 1
-    if (num === 0) {
-      console.log('Player goes first')
-      cellsComp.forEach(element => {
-        element.addEventListener('click', droppingPlayerBombs)
-      })
-    } else {
-      console.log('Computor goes first')
-      droppingCompBombs()
-    }
-    
-  }
 
-  function droppingPlayerBombs(event) {
-    const takeTurn = false
-    if (!event.target.classList.contains('comp-ship')) {
-      console.log('Move on to computer go here! ANDY')
-    } else {
+
+  function startGameActions() {
+
+
+    function whoGoesFirst() {
+      // const num = Math.floor(Math.random() * 2)
+      const num = 1
+      if (num === 0) {
+        console.log('Player goes first')
+        
+      } else {
+        console.log('Computer goes first')
+        setTimeout(() => {
+          droppingCompBombs()
+        }, 3000)
+      }
+    }
+
+    cellsComp.forEach(element => {
+      element.addEventListener('click', droppingPlayerBombs)
+    })
+
+
+    function droppingPlayerBombs(event) {
       
-      event.target.classList.remove('comp-ship')
-      event.target.classList.add('ship-hit')
-      console.log(event.target.classList)
-    }
-  }
+      if (!event.target.classList.contains('comp-ship')) {
+        event.target.classList.add('missed-shot')
+        console.log('You missed, its MY turn now!')
+        console.log('TRIGGER SOUND HERE')
+        setTimeout(() => {
+          droppingCompBombs()
+        }, 3000)
 
-  function droppingCompBombs() {
-    const takeTurn = false
-    const shotsToTake = []
-    for (let i = 0; i < cellsPlayer.length; i++) {
-      shotsToTake.push(i)
-    }
-    const bombDropLocation = Math.floor(Math.random() * cellCount)
+      } else {
 
-    console.log(shotsToTake)
-    console.log(bombDropLocation)
+        event.target.classList.remove('comp-ship')
+        event.target.classList.add('ship-hit')
+        console.log(event.target.classList)
+        setTimeout(() => {
+          droppingCompBombs()
+        }, 3000)
+      }
+      // return nextPlayer()
+    }
+    const shotsTaken = []
     
+    function droppingCompBombs() {
+      
+      const bombDropLocation = Math.floor(Math.random() * cellCount)
+
+      if (shotsTaken.includes(bombDropLocation)) {
+        return droppingCompBombs()
+      } else {
+        shotsTaken.push(bombDropLocation)
+        if (cellsPlayer[bombDropLocation].classList.contains('ship')) {
+          console.log('I have hit a ship!')
+          cellsPlayer[bombDropLocation].classList.remove('ship')
+          cellsPlayer[bombDropLocation].classList.add('ship-hit')
+          droppingPlayerBombs()
+        }
+        cellsPlayer[bombDropLocation].classList.add('missed-shot')
+        console.log('I missed, your turn')
+        console.log(bombDropLocation)
+        console.log(shotsTaken)
+        droppingPlayerBombs()
+      }
+    }
+
+    whoGoesFirst()
+
   }
-
-
 
 
 
@@ -357,15 +388,11 @@ function init() {
     isPlaying = true
     createGridComp()
     createAllCompShips()
-    whoGoesFirst()
-    
+    startGameActions()
+
   }
 
   createGridPlayer()
-  
-  
-
-  
 
 
 
@@ -373,12 +400,16 @@ function init() {
 
 
 
-  
+
+
+
+
+
   //! EVENT LISTENERS ------------------------------------------------------------------------
   randomizeShipsBtn.addEventListener('click', randomizeAllShips)
   startGameBtn.addEventListener('click', startGame)
   // cellsComp.forEach(cell => cell.addEventListener('click', droppingBombs))
-  
+
 
 }
 

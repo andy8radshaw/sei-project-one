@@ -77,3 +77,10 @@ body {
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+.missed-shot {
+  border: none;
+  background-color: green;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
