@@ -70,3 +70,10 @@ body {
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+.ship-hit {
+  border: none;
+  background-color: orangered;
+  background-repeat: no-repeat;
+  background-size: contain;
+}

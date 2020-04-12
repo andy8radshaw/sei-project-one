@@ -302,20 +302,70 @@ function init() {
     }
     createAllShips()
   }
+  
+
+  // ! GAMEPLAY ------------------------------------------------------------------------
+
+  function whoGoesFirst() {
+    // const num = Math.floor(Math.random() * 2)
+    const num = 1
+    if (num === 0) {
+      console.log('Player goes first')
+      cellsComp.forEach(element => {
+        element.addEventListener('click', droppingPlayerBombs)
+      })
+    } else {
+      console.log('Computor goes first')
+      droppingCompBombs()
+    }
+    
+  }
+
+  function droppingPlayerBombs(event) {
+    const takeTurn = false
+    if (!event.target.classList.contains('comp-ship')) {
+      console.log('Move on to computer go here! ANDY')
+    } else {
+      
+      event.target.classList.remove('comp-ship')
+      event.target.classList.add('ship-hit')
+      console.log(event.target.classList)
+    }
+  }
+
+  function droppingCompBombs() {
+    const takeTurn = false
+    const shotsToTake = []
+    for (let i = 0; i < cellsPlayer.length; i++) {
+      shotsToTake.push(i)
+    }
+    const bombDropLocation = Math.floor(Math.random() * cellCount)
+
+    console.log(shotsToTake)
+    console.log(bombDropLocation)
+    
+  }
+
+
+
+
+
+  // ! STARTING THE GAME ---------------------------------------------------------------
 
   function startGame() {
     if (isPlaying) return
     isPlaying = true
     createGridComp()
     createAllCompShips()
-    droppingBombs()
+    whoGoesFirst()
+    
   }
 
   createGridPlayer()
+  
+  
 
-  function droppingBombs(event) {
-    console.log(cellsComp)
-  }
+  
 
 
 
@@ -328,9 +378,7 @@ function init() {
   randomizeShipsBtn.addEventListener('click', randomizeAllShips)
   startGameBtn.addEventListener('click', startGame)
   // cellsComp.forEach(cell => cell.addEventListener('click', droppingBombs))
-  cellsComp.forEach(element => {
-    element.addEventListener('click', droppingBombs)
-  })
+  
 
 }
 
