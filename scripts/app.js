@@ -7,6 +7,7 @@ function init() {
   const cellsComp = []
   const randomizeShipsBtn = document.querySelector('#randomize-ships')
   const startGameBtn = document.querySelector('#start-game')
+  const gameMessages = document.querySelector('.game-messages')
 
 
   //* grid variables
@@ -16,6 +17,7 @@ function init() {
   let reservedSpaces = []
 
   //* game variables
+  let isPressed = false
   let isPlaying = false
   const ships = [2, 3, 4, 5, 6]
   const ship = [
@@ -290,7 +292,7 @@ function init() {
   //! BUTTON CONTROLLERS -------------------------------------------------------------------
   //* Randomize ships button
   function randomizeAllShips() {
-    if (isPlaying) return
+    if (isPressed) return
     //set reserved spaces back to an empty array for a new board of ships
     reservedSpaces = []
     const wholeGridCells = document.querySelectorAll('.whole-grid-player')
@@ -313,12 +315,13 @@ function init() {
 
     function whoGoesFirst() {
       // const num = Math.floor(Math.random() * 2)
-      const num = 1
+      const num = 0
       if (num === 0) {
-        console.log('Player goes first')
+        gameMessages.textContent = 'YOUR TURN, Lets see what you\'ve got!'
         
       } else {
-        console.log('Computer goes first')
+        gameMessages.textContent = 'I\'ll KICK THINGS OFF, How do you like THIS!'
+        //!add AUDIO HERE BOMB IN FLIGHT
         setTimeout(() => {
           droppingCompBombs()
         }, 3000)
@@ -331,25 +334,34 @@ function init() {
 
 
     function droppingPlayerBombs(event) {
-      
+      if (isPlaying) return
+      console.log(event.target.classList)
       if (!event.target.classList.contains('comp-ship')) {
         event.target.classList.add('missed-shot')
-        console.log('You missed, its MY turn now!')
-        console.log('TRIGGER SOUND HERE')
+        gameMessages.textContent = 'PLAYER missed, Computers turn next!'
+        //!add AUDIO HERE DROP N SPLASH
         setTimeout(() => {
           droppingCompBombs()
-        }, 3000)
+        }, 5000)
 
       } else {
-
+        //removes and adds classes
+        //!add AUDIO HERE DROP N BOMB-HIT
+        gameMessages.textContent = 'Good shot, I\'ll get you this time!'
         event.target.classList.remove('comp-ship')
         event.target.classList.add('ship-hit')
-        console.log(event.target.classList)
+        
+        // checks if whole ship is sank
+
+
+
+        // now triggers the comp to drop bomb
+        //!add AUDIO HERE BOMB IN FLIGHT
         setTimeout(() => {
           droppingCompBombs()
-        }, 3000)
+        }, 5000)
       }
-      // return nextPlayer()
+      isPlaying = true
     }
     const shotsTaken = []
     
@@ -362,17 +374,20 @@ function init() {
       } else {
         shotsTaken.push(bombDropLocation)
         if (cellsPlayer[bombDropLocation].classList.contains('ship')) {
-          console.log('I have hit a ship!')
+          gameMessages.textContent = 'COMPUTER hit a ship! Players turn next'
           cellsPlayer[bombDropLocation].classList.remove('ship')
           cellsPlayer[bombDropLocation].classList.add('ship-hit')
+          //!add AUDIO HERE BOMB-HIT
           droppingPlayerBombs()
         }
         cellsPlayer[bombDropLocation].classList.add('missed-shot')
-        console.log('I missed, your turn')
+        gameMessages.textContent = 'COMPUTER missed, Players turn'
         console.log(bombDropLocation)
         console.log(shotsTaken)
+        //!add AUDIO HERE SPLASH
         droppingPlayerBombs()
       }
+      isPlaying = false
     }
 
     whoGoesFirst()
@@ -384,8 +399,8 @@ function init() {
   // ! STARTING THE GAME ---------------------------------------------------------------
 
   function startGame() {
-    if (isPlaying) return
-    isPlaying = true
+    if (isPressed) return
+    isPressed = true
     createGridComp()
     createAllCompShips()
     startGameActions()

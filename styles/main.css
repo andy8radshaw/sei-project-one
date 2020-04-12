@@ -4,12 +4,19 @@
 
 body {
   height: 100vh;
-  margin: 0;
+  margin: 0 auto;
+}
+
+header {
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 
 .grid-wrapper {
-  height: 100vh;
+  height: 70vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,4 +90,27 @@ body {
   background-color: green;
   background-repeat: no-repeat;
   background-size: contain;
+}
+
+/* Buttons styles */
+section.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  padding: 10px;
+  margin: 40px;
+  width: 150px;
+}
+
+/* Game Messages styles */
+
+section.game-messages {
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
