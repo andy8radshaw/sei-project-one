@@ -16,7 +16,7 @@ header {
 
 
 .grid-wrapper {
-  height: 70vh;
+  height: 65vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -111,19 +111,31 @@ section.game-messages {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 70vh;
+  height: 25vh;
 }
 
-section.game-messages {
-  height: 10vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 
 /* Instructions Page */
 
-div.instructions {
+div.instructions-board {
   display: none;
+  height: 70vh;
+  width: 800px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto
+}
+
+/* Winner Page */
+
+div.winner-board {
+  display: none;
+  height: 70vh;
+  width: 800px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto
 }

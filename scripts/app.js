@@ -10,9 +10,11 @@ function init() {
   const gameMessage = document.querySelector('.game-message')
   const instructionsBtn = document.querySelector('#instructions-button')
   const gameBoard = document.querySelector('.grid-wrapper')
-  const instructionsBoard = document.querySelector('.instructions')
+  const instructionsBoard = document.querySelector('.instructions-board')
   const backToGameBtn = document.querySelector('#back-to-game-button')
   const gameMessages = document.querySelector('.game-messages')
+  const winnerBoard = document.querySelector('.winner-board')
+  const winnerMessage = document.querySelector('#winner-message')
 
 
   //* grid variables
@@ -104,6 +106,8 @@ function init() {
 
 
   // ! CREATING THE GRID -------------------------------------------------------------------
+
+  //Players Grid
   function createGridPlayer() {
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
@@ -114,6 +118,7 @@ function init() {
     }
   }
 
+  //Computers Grid
   function createGridComp() {
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
@@ -127,13 +132,12 @@ function init() {
 
 
   //! CREATING PLAYER'S SHIPS --------------------------------------------------------------
-  function createShip(numOfSquaresToFill, shipIndex) {
 
+  function createShip(numOfSquaresToFill, shipIndex) {
 
     //* horizontal or vertical?
     function horizontalOrVertical() {
       const num = Math.floor(Math.random() * 2)
-
       if (num === 0) {
         createVerticalShip()
       } else {
@@ -166,9 +170,9 @@ function init() {
         cellsPlayer[ship[shipIndex].location[i]].classList.add('ship')
         //add index to reserved spaces array
         reservedSpaces.push(ship[shipIndex].location[i])
-
       }
     }
+
     //* creating horizontal ship
     function createHorizontalShip() {
       // create array of suitable starting numbers to choose from
@@ -214,15 +218,16 @@ function init() {
     })
   }
 
+
+
+
   //! CREATING COMP'S SHIPS ---------------------------------------------------------------
 
   function createCompShip(numOfSquaresToFill, shipIndex) {
 
-
     //* horizontal or vertical?
     function horizontalOrVertical() {
       const num = Math.floor(Math.random() * 2)
-
       if (num === 0) {
         createVerticalShip()
       } else {
@@ -255,9 +260,9 @@ function init() {
         cellsComp[compShip[shipIndex].location[i]].classList.add('comp-ship')
         //add index to reserved spaces array
         reservedSpaces.push(compShip[shipIndex].location[i])
-
       }
     }
+
     //* creating horizontal ship
     function createHorizontalShip() {
       // create array of suitable starting numbers to choose from
@@ -304,7 +309,17 @@ function init() {
   }
 
 
+
+
   //! BUTTON CONTROLLERS -------------------------------------------------------------------
+
+  function startGame() {
+    if (isPressed) return
+    isPressed = true
+    createGridComp()
+    createAllCompShips()
+    startGameActions()
+  }
 
   //* Randomize ships button
   function randomizeAllShips() {
@@ -325,7 +340,7 @@ function init() {
   function handleInstructions() {
     gameBoard.style.display = 'none'
     gameMessages.style.display = 'none'
-    instructionsBoard.style.display = 'flex'    
+    instructionsBoard.style.display = 'flex'
   }
 
   //* Back to Game Button
@@ -336,9 +351,9 @@ function init() {
   }
 
 
+
+
   // ! GAMEPLAY ------------------------------------------------------------------------
-
-
 
   function startGameActions() {
 
@@ -363,40 +378,48 @@ function init() {
     })
 
     //* Players gameplay ----------------------------------
+    const playersBombDrops = []
     function droppingPlayerBombs(event) {
       if (isPlaying) return
-      if (!event.target.classList.contains('comp-ship')) {
-        event.target.classList.add('missed-shot')
-        gameMessage.textContent = 'PLAYER missed, Computers turn next!'
-        //!add AUDIO HERE DROP N SPLASH
-        setTimeout(() => {
-          droppingCompBombs()
-        }, 500)
-
+      if (playersBombDrops.includes(event.target.textContent)) {
+        gameMessage.textContent = 'You already picked this square dummy! TRY AGAIN'
       } else {
+        playersBombDrops.push(event.target.textContent)
+        console.log(playersBombDrops)
+      
+        if (!event.target.classList.contains('comp-ship')) {
+          event.target.classList.add('missed-shot')
+          gameMessage.textContent = 'PLAYER missed, Computers turn next!'
+          //!add AUDIO HERE DROP N SPLASH
+          setTimeout(() => {
+            droppingCompBombs()
+          }, 500)
+
+        } else {
         //removes and adds classes
         //!add AUDIO HERE DROP N BOMB-HIT
-        gameMessage.textContent = 'Good shot, I\'ll get you this time!'
-        event.target.classList.remove('comp-ship')
-        event.target.classList.add('ship-hit')
+          gameMessage.textContent = 'Good shot, I\'ll get you this time!'
+          event.target.classList.remove('comp-ship')
+          event.target.classList.add('ship-hit')
 
-        // checks if whole ship is sank. 
-        checkCompSunk(event)
+          // checks if whole ship is sank. 
+          checkCompSunk(event)
 
 
-        // now triggers the comp to drop bomb
-        //!add AUDIO HERE BOMB IN FLIGHT
-        setTimeout(() => {
-          droppingCompBombs()
-        }, 500)
+          // now triggers the comp to drop bomb
+          //!add AUDIO HERE BOMB IN FLIGHT
+          setTimeout(() => {
+            droppingCompBombs()
+          }, 500)
+        }
+        isPlaying = true
       }
-      isPlaying = true
     }
     
-    //* Computers Gameplay -----------------------------------
 
+    //* Computers Gameplay -----------------------------------
     const shotsTaken = []
-    
+
     function droppingCompBombs() {
       const bombDropLocation = Math.floor(Math.random() * cellCount)
       if (shotsTaken.includes(bombDropLocation)) {
@@ -425,6 +448,7 @@ function init() {
 
     //* checking if whole ship is sunk functions --------------------
 
+    // Computer
     function checkCompSunk(event) {
       for (let i = 0; i < compShip.length; i++) {
         if (compShip[i].location.includes(parseInt(event.target.textContent))) {
@@ -432,11 +456,12 @@ function init() {
           if (compShip[i].hitLocation.length === compShip[i].location.length) {
             compShip[i].isSunk = true
             console.log(`You have sunk HMS ${compShip[i].name}! I will get you this time!`)
+            declareWinner()
           }
         }
       }
     }
-
+    // Player
     function checkPlayerSunk(bombDropLocation) {
       for (let i = 0; i < ship.length; i++) {
         if (ship[i].location.includes(bombDropLocation)) {
@@ -444,40 +469,55 @@ function init() {
           if (ship[i].hitLocation.length === ship[i].location.length) {
             ship[i].isSunk = true
             console.log(`I have sunk your ${ship[i].name}! MWA HAHAHAHA!`)
+            declareWinner()
           }
         }
       }
     }
-
     whoGoesFirst()
-
   }
 
 
 
-  // ! STARTING THE GAME ---------------------------------------------------------------
+  // ! DECLARING THE WINNER ---------------------------------------------------------------
 
-  function startGame() {
-    if (isPressed) return
-    isPressed = true
-    createGridComp()
-    createAllCompShips()
-    startGameActions()
+  function declareWinner() {
 
+    if (compShip[0].isSunk === true &&
+      compShip[1].isSunk === true &&
+      compShip[2].isSunk === true &&
+      compShip[3].isSunk === true &&
+      compShip[4].isSunk === true) {
+      console.log('CONGRATS')
+      gameBoard.style.display = 'none'
+      gameMessages.style.display = 'none'
+      winnerBoard.style.display = 'flex'
+      winnerMessage.textContent = 'Congratulations, you are the winner'
+    } else if (ship[0].isSunk === true &&
+      ship[1].isSunk === true &&
+      ship[2].isSunk === true &&
+      ship[3].isSunk === true &&
+      ship[4].isSunk === true) {
+      console.log('I WIN HAHAHAHAHAH')
+      gameBoard.style.display = 'none'
+      gameMessages.style.display = 'none'
+      winnerBoard.style.display = 'flex'
+      winnerMessage.textContent = 'BETTER LUCK NEXT TIME PUNK'
+    } else {
+      return
+    }
   }
+
+
+
+
+
+
+
+
+
 
   createGridPlayer()
-
-
-
-
-
-
-
-
-
-
-
 
   //! EVENT LISTENERS ------------------------------------------------------------------------
   randomizeShipsBtn.addEventListener('click', randomizeAllShips)
