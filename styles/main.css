@@ -41,7 +41,7 @@ header {
   flex-grow: 1;
   height: 10%;
   width: 10%;
-}
+  }
 
 .grid-player div.ship {
   border: none;
@@ -109,6 +109,7 @@ button {
 
 section.game-messages {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 25vh;

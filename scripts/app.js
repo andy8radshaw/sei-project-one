@@ -3,8 +3,6 @@ function init() {
   // * Dom elements
   const gridPlayer = document.querySelector('.grid-player')
   const gridComp = document.querySelector('.grid-comp')
-  const cellsPlayer = []
-  const cellsComp = []
   const randomizeShipsBtn = document.querySelector('#randomize-ships')
   const startGameBtn = document.querySelector('#start-game')
   const gameMessage = document.querySelector('.game-message')
@@ -15,16 +13,22 @@ function init() {
   const gameMessages = document.querySelector('.game-messages')
   const winnerBoard = document.querySelector('.winner-board')
   const winnerMessage = document.querySelector('#winner-message')
+  const resetGameBtn = document.querySelector('#reset-game')
+  const shipSunkMessage = document.querySelector('.ship-sunk-message')
+  const closeWinnerBoard = document.querySelector('#close-winner-board')
+  const playAgainBtn = document.querySelector('#play-again')
 
 
   //* grid variables
   const width = 10
   const cellCount = width * width
-
+  const cellsPlayer = []
+  const cellsComp = []
   let reservedSpaces = []
 
   //* game variables
-  let isPressed = false
+  let isRandomPressed = false
+  let isStartPressed = true
   let isPlaying = false
   const ships = [2, 3, 4, 5, 6]
   const ship = [
@@ -313,9 +317,11 @@ function init() {
 
   //! BUTTON CONTROLLERS -------------------------------------------------------------------
 
+  //* Start Game Button
   function startGame() {
-    if (isPressed) return
-    isPressed = true
+    if (isStartPressed) return
+    isStartPressed = true
+    isRandomPressed = true
     createGridComp()
     createAllCompShips()
     startGameActions()
@@ -323,7 +329,8 @@ function init() {
 
   //* Randomize ships button
   function randomizeAllShips() {
-    if (isPressed) return
+    if (isRandomPressed) return
+    isStartPressed = false
     //set reserved spaces back to an empty array for a new board of ships
     reservedSpaces = []
     const wholeGridCells = document.querySelectorAll('.whole-grid-player')
@@ -350,12 +357,53 @@ function init() {
     gameMessages.style.display = 'flex'
   }
 
+  //* Closing the Winner Board
+  function handleWinnerClose() {
+    closeWinnerBoard.style.display = 'none'
+    gameBoard.style.display = 'flex'
+    gameMessages.style.display = 'flex'
+  }
+
+  function handleResetGame() {
+    cellsPlayer.forEach(cell => {
+      cell.classList = 'whole-grid-player'
+    })
+    cellsComp.forEach(cell => {
+      cell.classList = ''
+      cell.textContent = ''
+    })
+    cellsComp.splice(0)
+    reservedSpaces = []
+    isRandomPressed = false
+    isStartPressed = true
+    isPlaying = false
+    ship.forEach(ship => {
+      ship.location = []
+      ship.hitLocation = []
+      ship.isSunk = false
+    })
+    compShip.forEach(ship => {
+      ship.location = []
+      ship.hitLocation = []
+      ship.isSunk = false
+    })
+    winnerBoard.style.display = 'none'
+    gameBoard.style.display = 'flex'
+    gameMessage.textContent = 'I declare WAR. Arrange your ships and lets do BATTLE!'
+    shipSunkMessage.textContent = ''
+    gameMessages.style.display = 'flex'
+  }
+
+
+
 
 
 
   // ! GAMEPLAY ------------------------------------------------------------------------
 
   function startGameActions() {
+
+    
 
     // * Who goes first ------------------------
     function whoGoesFirst() {
@@ -393,7 +441,7 @@ function init() {
           //!add AUDIO HERE DROP N SPLASH
           setTimeout(() => {
             droppingCompBombs()
-          }, 500)
+          }, 50)
 
         } else {
         //removes and adds classes
@@ -410,7 +458,7 @@ function init() {
           //!add AUDIO HERE BOMB IN FLIGHT
           setTimeout(() => {
             droppingCompBombs()
-          }, 500)
+          }, 50)
         }
         isPlaying = true
       }
@@ -455,7 +503,7 @@ function init() {
           compShip[i].hitLocation.push(parseInt(event.target.textContent))
           if (compShip[i].hitLocation.length === compShip[i].location.length) {
             compShip[i].isSunk = true
-            console.log(`You have sunk HMS ${compShip[i].name}! I will get you this time!`)
+            shipSunkMessage.textContent = `You have sunk HMS ${compShip[i].name}! I will get you this time!`
             declareWinner()
           }
         }
@@ -468,7 +516,7 @@ function init() {
           ship[i].hitLocation.push(bombDropLocation)
           if (ship[i].hitLocation.length === ship[i].location.length) {
             ship[i].isSunk = true
-            console.log(`I have sunk your ${ship[i].name}! MWA HAHAHAHA!`)
+            shipSunkMessage.textContent = `I have sunk your ${ship[i].name}! MWA HAHAHAHA!`
             declareWinner()
           }
         }
@@ -524,6 +572,9 @@ function init() {
   startGameBtn.addEventListener('click', startGame)
   instructionsBtn.addEventListener('click', handleInstructions)
   backToGameBtn.addEventListener('click', handleBackToGame)
+  resetGameBtn.addEventListener('click', handleResetGame)
+  closeWinnerBoard.addEventListener('click', handleWinnerClose)
+  playAgainBtn.addEventListener('click', handleResetGame)
 
 
 }
