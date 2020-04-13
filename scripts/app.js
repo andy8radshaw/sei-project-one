@@ -8,6 +8,11 @@ function init() {
   const randomizeShipsBtn = document.querySelector('#randomize-ships')
   const startGameBtn = document.querySelector('#start-game')
   const gameMessage = document.querySelector('.game-message')
+  const instructionsBtn = document.querySelector('#instructions-button')
+  const gameBoard = document.querySelector('.grid-wrapper')
+  const instructionsBoard = document.querySelector('.instructions')
+  const backToGameBtn = document.querySelector('#back-to-game-button')
+  const gameMessages = document.querySelector('.game-messages')
 
 
   //* grid variables
@@ -300,6 +305,7 @@ function init() {
 
 
   //! BUTTON CONTROLLERS -------------------------------------------------------------------
+
   //* Randomize ships button
   function randomizeAllShips() {
     if (isPressed) return
@@ -313,6 +319,20 @@ function init() {
       ship[i].location = []
     }
     createAllShips()
+  }
+
+  //* Instructions Button
+  function handleInstructions() {
+    gameBoard.style.display = 'none'
+    gameMessages.style.display = 'none'
+    instructionsBoard.style.display = 'flex'    
+  }
+
+  //* Back to Game Button
+  function handleBackToGame() {
+    instructionsBoard.style.display = 'none'
+    gameBoard.style.display = 'flex'
+    gameMessages.style.display = 'flex'
   }
 
 
@@ -462,7 +482,8 @@ function init() {
   //! EVENT LISTENERS ------------------------------------------------------------------------
   randomizeShipsBtn.addEventListener('click', randomizeAllShips)
   startGameBtn.addEventListener('click', startGame)
-  // cellsComp.forEach(cell => cell.addEventListener('click', droppingBombs))
+  instructionsBtn.addEventListener('click', handleInstructions)
+  backToGameBtn.addEventListener('click', handleBackToGame)
 
 
 }

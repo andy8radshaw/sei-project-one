@@ -72,7 +72,6 @@ header {
 }
 
 .grid-comp div.comp-ship {
-  border: none;
   background-color: lightseagreen;
   background-repeat: no-repeat;
   background-size: contain;
@@ -109,8 +108,22 @@ button {
 /* Game Messages styles */
 
 section.game-messages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+
+section.game-messages {
   height: 10vh;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+
+/* Instructions Page */
+
+div.instructions {
+  display: none;
 }
