@@ -7,7 +7,7 @@ function init() {
   const cellsComp = []
   const randomizeShipsBtn = document.querySelector('#randomize-ships')
   const startGameBtn = document.querySelector('#start-game')
-  const gameMessages = document.querySelector('.game-messages')
+  const gameMessage = document.querySelector('.game-message')
 
 
   //* grid variables
@@ -25,30 +25,35 @@ function init() {
       name: 'Destroyer',
       size: 2,
       location: [],
+      hitLocation: [],
       isSunk: false
     },
     {
       name: 'Submarine',
       size: 3,
       location: [],
+      hitLocation: [],
       isSunk: false
     },
     {
       name: 'Cruiser',
       size: 4,
       location: [],
+      hitLocation: [],
       isSunk: false
     },
     {
       name: 'Battleship',
       size: 5,
       location: [],
+      hitLocation: [],
       isSunk: false
     },
     {
       name: 'Carrier',
       size: 6,
       location: [],
+      hitLocation: [],
       isSunk: false
     }
   ]
@@ -58,30 +63,35 @@ function init() {
       name: 'Destroyer',
       size: 2,
       location: [],
+      hitLocation: [],
       isSunk: false
     },
     {
       name: 'Submarine',
       size: 3,
       location: [],
+      hitLocation: [],
       isSunk: false
     },
     {
       name: 'Cruiser',
       size: 4,
       location: [],
+      hitLocation: [],
       isSunk: false
     },
     {
       name: 'Battleship',
       size: 5,
       location: [],
+      hitLocation: [],
       isSunk: false
     },
     {
       name: 'Carrier',
       size: 6,
       location: [],
+      hitLocation: [],
       isSunk: false
     }
   ]
@@ -312,15 +322,15 @@ function init() {
 
   function startGameActions() {
 
-
+    // * Who goes first ------------------------
     function whoGoesFirst() {
-      // const num = Math.floor(Math.random() * 2)
-      const num = 0
+      const num = Math.floor(Math.random() * 2)
+      // const num = 0
       if (num === 0) {
-        gameMessages.textContent = 'YOUR TURN, Lets see what you\'ve got!'
-        
+        gameMessage.textContent = 'YOUR TURN, Lets see what you\'ve got!'
+
       } else {
-        gameMessages.textContent = 'I\'ll KICK THINGS OFF, How do you like THIS!'
+        gameMessage.textContent = 'I\'ll KICK THINGS OFF, How do you like THIS!'
         //!add AUDIO HERE BOMB IN FLIGHT
         setTimeout(() => {
           droppingCompBombs()
@@ -332,64 +342,91 @@ function init() {
       element.addEventListener('click', droppingPlayerBombs)
     })
 
-
+    //* Players gameplay ----------------------------------
     function droppingPlayerBombs(event) {
       if (isPlaying) return
-      console.log(event.target.classList)
       if (!event.target.classList.contains('comp-ship')) {
         event.target.classList.add('missed-shot')
-        gameMessages.textContent = 'PLAYER missed, Computers turn next!'
+        gameMessage.textContent = 'PLAYER missed, Computers turn next!'
         //!add AUDIO HERE DROP N SPLASH
         setTimeout(() => {
           droppingCompBombs()
-        }, 5000)
+        }, 500)
 
       } else {
         //removes and adds classes
         //!add AUDIO HERE DROP N BOMB-HIT
-        gameMessages.textContent = 'Good shot, I\'ll get you this time!'
+        gameMessage.textContent = 'Good shot, I\'ll get you this time!'
         event.target.classList.remove('comp-ship')
         event.target.classList.add('ship-hit')
-        
-        // checks if whole ship is sank
 
+        // checks if whole ship is sank. 
+        checkCompSunk(event)
 
 
         // now triggers the comp to drop bomb
         //!add AUDIO HERE BOMB IN FLIGHT
         setTimeout(() => {
           droppingCompBombs()
-        }, 5000)
+        }, 500)
       }
       isPlaying = true
     }
+    
+    //* Computers Gameplay -----------------------------------
+
     const shotsTaken = []
     
     function droppingCompBombs() {
-      
       const bombDropLocation = Math.floor(Math.random() * cellCount)
-
       if (shotsTaken.includes(bombDropLocation)) {
         return droppingCompBombs()
       } else {
         shotsTaken.push(bombDropLocation)
         if (cellsPlayer[bombDropLocation].classList.contains('ship')) {
-          
           cellsPlayer[bombDropLocation].classList.remove('ship')
           cellsPlayer[bombDropLocation].classList.add('ship-hit')
-          gameMessages.textContent = 'COMPUTER hit a ship! Players turn next'
+          gameMessage.textContent = 'COMPUTER hit a ship! Players turn next'
           //!add AUDIO HERE BOMB-HIT
+          checkPlayerSunk(bombDropLocation)
           droppingPlayerBombs()
         } else {
           cellsPlayer[bombDropLocation].classList.add('missed-shot')
-          gameMessages.textContent = 'COMPUTER missed, Players turn'
-          console.log(bombDropLocation)
-          console.log(shotsTaken)
+          gameMessage.textContent = 'COMPUTER missed, Players turn'
+          // console.log(bombDropLocation)
+          // console.log(shotsTaken)
           //!add AUDIO HERE SPLASH
           droppingPlayerBombs()
         }
       }
       isPlaying = false
+    }
+
+
+    //* checking if whole ship is sunk functions --------------------
+
+    function checkCompSunk(event) {
+      for (let i = 0; i < compShip.length; i++) {
+        if (compShip[i].location.includes(parseInt(event.target.textContent))) {
+          compShip[i].hitLocation.push(parseInt(event.target.textContent))
+          if (compShip[i].hitLocation.length === compShip[i].location.length) {
+            compShip[i].isSunk = true
+            console.log(`You have sunk HMS ${compShip[i].name}! I will get you this time!`)
+          }
+        }
+      }
+    }
+
+    function checkPlayerSunk(bombDropLocation) {
+      for (let i = 0; i < ship.length; i++) {
+        if (ship[i].location.includes(bombDropLocation)) {
+          ship[i].hitLocation.push(bombDropLocation)
+          if (ship[i].hitLocation.length === ship[i].location.length) {
+            ship[i].isSunk = true
+            console.log(`I have sunk your ${ship[i].name}! MWA HAHAHAHA!`)
+          }
+        }
+      }
     }
 
     whoGoesFirst()
