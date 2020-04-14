@@ -19,6 +19,8 @@ function init() {
   const shipSunkMessage = document.querySelector('.ship-sunk-message')
   const closeWinnerBoard = document.querySelector('#close-winner-board')
   const playAgainBtn = document.querySelector('#play-again')
+  const playerScore = document.querySelector('#player-score')
+  const compScore = document.querySelector('#comp-score')
 
 
   //* grid variables
@@ -32,6 +34,8 @@ function init() {
   let isRandomPressed = false
   let isStartPressed = true
   let isPlaying = false
+  let playerCurrentScore = 0
+  let compCurrentScore = 0
   const ships = [2, 3, 4, 5, 6]
   const ship = [
     {
@@ -380,6 +384,8 @@ function init() {
     isRandomPressed = false
     isStartPressed = true
     isPlaying = false
+    playerCurrentScore = 0
+    compCurrentScore = 0
     ship.forEach(ship => {
       ship.location = []
       ship.hitLocation = []
@@ -663,6 +669,8 @@ function init() {
       gameMessages.style.display = 'none'
       winnerBoard.style.display = 'flex'
       winnerMessage.textContent = 'Congratulations, you are the winner'
+      playerCurrentScore++
+      playerScore.textContent = `${playerCurrentScore}`
     } else if (ship[0].isSunk === true &&
     ship[1].isSunk === true &&
     ship[2].isSunk === true &&
@@ -673,6 +681,8 @@ function init() {
       gameMessages.style.display = 'none'
       winnerBoard.style.display = 'flex'
       winnerMessage.textContent = 'BETTER LUCK NEXT TIME PUNK'
+      compCurrentScore++
+      compScore.textContent = `${compCurrentScore}`
     } else {
       return
     }
