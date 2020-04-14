@@ -1,5 +1,7 @@
 function init() {
 
+  //! Elements ------------------------------------------------------------------
+
   // * Dom elements
   const gridPlayer = document.querySelector('.grid-player')
   const gridComp = document.querySelector('.grid-comp')
@@ -364,6 +366,7 @@ function init() {
     gameMessages.style.display = 'flex'
   }
 
+  //* Reset game button on Game-Board and Play Again button on Winner-Board
   function handleResetGame() {
     cellsPlayer.forEach(cell => {
       cell.classList = 'whole-grid-player'
@@ -403,8 +406,6 @@ function init() {
 
   function startGameActions() {
 
-    
-
     // * Who goes first ------------------------
     function whoGoesFirst() {
       const num = Math.floor(Math.random() * 2)
@@ -413,6 +414,7 @@ function init() {
         gameMessage.textContent = 'YOUR TURN, Lets see what you\'ve got!'
 
       } else {
+        isPlaying = true
         gameMessage.textContent = 'I\'ll KICK THINGS OFF, How do you like THIS!'
         //!add AUDIO HERE BOMB IN FLIGHT
         setTimeout(() => {
@@ -433,7 +435,6 @@ function init() {
         gameMessage.textContent = 'You already picked this square dummy! TRY AGAIN'
       } else {
         playersBombDrops.push(event.target.textContent)
-        console.log(playersBombDrops)
       
         if (!event.target.classList.contains('comp-ship')) {
           event.target.classList.add('missed-shot')
@@ -466,9 +467,15 @@ function init() {
     
 
     //* Computers Gameplay -----------------------------------
-    const shotsTaken = []
+    const shotsTaken = [-1]
 
     function droppingCompBombs() {
+      console.log(cellsPlayer[(shotsTaken[(shotsTaken.length - 1)])])
+      
+
+
+
+
       const bombDropLocation = Math.floor(Math.random() * cellCount)
       if (shotsTaken.includes(bombDropLocation)) {
         return droppingCompBombs()

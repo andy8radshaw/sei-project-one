@@ -33,7 +33,8 @@ header {
   justify-content: center;
   height: 500px;
   width: 500px;
-  margin: 20px
+  margin: 20px;
+  color: rgba(0, 0, 0, 0);
 }
 
 .grid-player div.whole-grid-player {
@@ -44,8 +45,9 @@ header {
   }
 
 .grid-player div.ship {
-  border: none;
-  background-color: grey;
+  /* background: rgb(158,158,158);
+  background: linear-gradient(90deg, rgba(158,158,158,0) 18%, rgba(87,87,87,1) 22%, rgba(171,171,171,1) 54%, rgba(136,136,136,1) 78%, rgba(158,158,158,0) 82%); */
+  background-color: mediumpurple;
   background-repeat: no-repeat;
   background-size: contain;
 }
@@ -61,7 +63,8 @@ header {
   justify-content: center;
   height: 500px;
   width: 500px;
-  margin: 20px
+  margin: 20px;
+  color: rgba(0, 0, 0, 0);
 }
 
 .grid-comp div.whole-grid-comp {
@@ -69,6 +72,7 @@ header {
   flex-grow: 1;
   height: 10%;
   width: 10%;
+  
 }
 
 .grid-comp div.comp-ship {
@@ -78,14 +82,12 @@ header {
 }
 
 .ship-hit {
-  border: none;
   background-color: orangered;
   background-repeat: no-repeat;
   background-size: contain;
 }
 
 .missed-shot {
-  border: none;
   background-color: green;
   background-repeat: no-repeat;
   background-size: contain;
