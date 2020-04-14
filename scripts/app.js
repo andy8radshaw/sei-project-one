@@ -480,8 +480,6 @@ function init() {
       if (compHit) {
         persueCompHits()
       } else {
-
-      
         const bombDropLocation = Math.floor(Math.random() * cellCount)
         if (shotsTaken.includes(bombDropLocation)) {
           return droppingCompBombs()
@@ -514,11 +512,9 @@ function init() {
     //checking prevous shot was a hit
     function checkCompHit() {
       if (cellsPlayer[(shotsTaken[(shotsTaken.length - 1)])] === undefined) {
-        console.log('dont worry ill check on the next go')
         compHit = false
         return
       } else if (cellsPlayer[(shotsTaken[(shotsTaken.length - 1)])].classList.contains('ship-hit')) {
-        console.log('I hit a ship on my last go. My next choices are below')
         compHit = true
         return
       } else {
@@ -537,9 +533,9 @@ function init() {
           (shotsTaken[(shotsTaken.length - 1)] + 10)
         ]
         selection = Math.floor(Math.random() * 2)
-        console.log(targetedCompShotSelections)
-        console.log(selection)
-        console.log(`my next shot would be ${targetedCompShotSelections[selection]}`)
+        // console.log(targetedCompShotSelections)
+        // console.log(selection)
+        // console.log(`my next shot would be ${targetedCompShotSelections[selection]}`)
 
       } else if (shotsTaken[(shotsTaken.length - 1)] === 99) {
         targetedCompShotSelections = [
@@ -547,9 +543,9 @@ function init() {
           (shotsTaken[(shotsTaken.length - 1)] - 10)
         ]
         selection = Math.floor(Math.random() * 2)
-        console.log(targetedCompShotSelections)
-        console.log(selection)
-        console.log(`my next shot would be ${targetedCompShotSelections[selection]}`)
+        // console.log(targetedCompShotSelections)
+        // console.log(selection)
+        // console.log(`my next shot would be ${targetedCompShotSelections[selection]}`)
 
       } else if (shotsTaken[(shotsTaken.length - 1)] <= 9) {
         targetedCompShotSelections = [
@@ -558,9 +554,9 @@ function init() {
           (shotsTaken[(shotsTaken.length - 1)] + 10)
         ]
         selection = Math.floor(Math.random() * 3)
-        console.log(targetedCompShotSelections)
-        console.log(selection)
-        console.log(`my next shot would be ${targetedCompShotSelections[selection]}`)
+        // console.log(targetedCompShotSelections)
+        // console.log(selection)
+        // console.log(`my next shot would be ${targetedCompShotSelections[selection]}`)
 
       } else if (shotsTaken[(shotsTaken.length - 1)] >= 90) {
         targetedCompShotSelections = [
@@ -569,9 +565,9 @@ function init() {
           (shotsTaken[(shotsTaken.length - 1)] - 10)
         ]
         selection = Math.floor(Math.random() * 3)
-        console.log(targetedCompShotSelections)
-        console.log(selection)
-        console.log(`my next shot would be ${targetedCompShotSelections[selection]}`)
+        // console.log(targetedCompShotSelections)
+        // console.log(selection)
+        // console.log(`my next shot would be ${targetedCompShotSelections[selection]}`)
 
       } else {
         targetedCompShotSelections = [
@@ -581,17 +577,18 @@ function init() {
           (shotsTaken[(shotsTaken.length - 1)] + 10)
         ]
         selection = Math.floor(Math.random() * 4)
-        console.log(targetedCompShotSelections)
-        console.log(selection)
-        console.log(`my next shot would be ${targetedCompShotSelections[selection]}`)
+        // console.log(targetedCompShotSelections)
+        // console.log(selection)
+        // console.log(`my next shot would be ${targetedCompShotSelections[selection]}`)
       }
 
 
       //checking if new target has already been taken
-      if (targetedCompShotSelections.every(number => {
-        return shotsTaken.includes(number) === true
-      })) {
+      const checkCellsAroundHit = targetedCompShotSelections.every(number => shotsTaken.includes(number))
+
+      if (checkCellsAroundHit === true) {
         cellsFull = true
+        compHit = false
         droppingCompBombs()
       } else if (shotsTaken.includes(targetedCompShotSelections[selection])) {
         persueCompHits()
@@ -613,7 +610,7 @@ function init() {
           //!add AUDIO HERE SPLASH
           cellsFull = false
           droppingPlayerBombs()
-        }      
+        }
       }
     }
 
