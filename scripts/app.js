@@ -470,11 +470,8 @@ function init() {
     const shotsTaken = [-1]
 
     function droppingCompBombs() {
-      console.log(cellsPlayer[(shotsTaken[(shotsTaken.length - 1)])])
-      
 
-
-
+      checkCompHit()
 
       const bombDropLocation = Math.floor(Math.random() * cellCount)
       if (shotsTaken.includes(bombDropLocation)) {
@@ -500,8 +497,65 @@ function init() {
       isPlaying = false
     }
 
+    //* Making COMPS next move if prevous shot was a hit ----------------------
 
-    //* checking if whole ship is sunk functions --------------------
+    function checkCompHit() {
+      if (cellsPlayer[(shotsTaken[(shotsTaken.length - 1)])] === undefined) {
+        console.log('dont worry ill check on the next go')
+        return
+      } else if (cellsPlayer[(shotsTaken[(shotsTaken.length - 1)])].classList.contains('ship-hit')) {
+        console.log('I hit a ship on my last go')
+        persueCompHits()
+        return
+      } else {
+        return
+      }
+    }
+
+
+    function persueCompHits() {
+      // const i = Math.floor(Math.random() * 4)
+      let targetedCompShot = []
+      if (shotsTaken[(shotsTaken.length - 1)] === 0) {
+        targetedCompShot = [
+          (shotsTaken[(shotsTaken.length - 1)] + 1), 
+          (shotsTaken[(shotsTaken.length - 1)] + 10)
+        ]
+        console.log(targetedCompShot)
+      } else if (shotsTaken[(shotsTaken.length - 1)] === 99) {
+        targetedCompShot = [
+          (shotsTaken[(shotsTaken.length - 1)] - 1), 
+          (shotsTaken[(shotsTaken.length - 1)] - 10)
+        ]
+        console.log(targetedCompShot)
+      } else if (shotsTaken[(shotsTaken.length - 1)] <= 9) {
+        targetedCompShot = [
+          (shotsTaken[(shotsTaken.length - 1)] - 1), 
+          (shotsTaken[(shotsTaken.length - 1)] + 1),
+          (shotsTaken[(shotsTaken.length - 1)] + 10)
+        ]
+        console.log(targetedCompShot)
+      } else if (shotsTaken[(shotsTaken.length - 1)] >= 90) {
+        targetedCompShot = [
+          (shotsTaken[(shotsTaken.length - 1)] - 1),
+          (shotsTaken[(shotsTaken.length - 1)] + 1), 
+          (shotsTaken[(shotsTaken.length - 1)] - 10)
+        ]
+        console.log(targetedCompShot)
+      } else {
+        targetedCompShot = [
+          (shotsTaken[(shotsTaken.length - 1)] - 1), 
+          (shotsTaken[(shotsTaken.length - 1)] + 1), 
+          (shotsTaken[(shotsTaken.length - 1)] - 10), 
+          (shotsTaken[(shotsTaken.length - 1)] + 10)
+        ]
+        console.log(targetedCompShot)
+      }
+      return
+    }
+
+
+    //* checking if whole ship is sunk functions ----------------------------
 
     // Computer
     function checkCompSunk(event) {

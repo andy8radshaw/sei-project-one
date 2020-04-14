@@ -34,7 +34,7 @@ header {
   height: 500px;
   width: 500px;
   margin: 20px;
-  color: rgba(0, 0, 0, 0);
+  color: rgba(0, 0, 0, 1);
 }
 
 .grid-player div.whole-grid-player {
@@ -64,7 +64,7 @@ header {
   height: 500px;
   width: 500px;
   margin: 20px;
-  color: rgba(0, 0, 0, 0);
+  color: rgba(0, 0, 0, 1);
 }
 
 .grid-comp div.whole-grid-comp {
