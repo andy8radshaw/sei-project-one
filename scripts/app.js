@@ -435,18 +435,18 @@ function init() {
         gameMessage.textContent = 'You already picked this square dummy! TRY AGAIN'
       } else {
         playersBombDrops.push(event.target.textContent)
-      
+
         if (!event.target.classList.contains('comp-ship')) {
           event.target.classList.add('missed-shot')
           gameMessage.textContent = 'PLAYER missed, Computers turn next!'
           //!add AUDIO HERE DROP N SPLASH
           setTimeout(() => {
             droppingCompBombs()
-          }, 50)
+          }, 1500)
 
         } else {
-        //removes and adds classes
-        //!add AUDIO HERE DROP N BOMB-HIT
+          //removes and adds classes
+          //!add AUDIO HERE DROP N BOMB-HIT
           gameMessage.textContent = 'Good shot, I\'ll get you this time!'
           event.target.classList.remove('comp-ship')
           event.target.classList.add('ship-hit')
@@ -459,99 +459,162 @@ function init() {
           //!add AUDIO HERE BOMB IN FLIGHT
           setTimeout(() => {
             droppingCompBombs()
-          }, 50)
+          }, 1500)
         }
         isPlaying = true
       }
     }
-    
+
 
     //* Computers Gameplay -----------------------------------
     const shotsTaken = [-1]
+    let cellsFull = false
+    let compHit = false
 
     function droppingCompBombs() {
 
-      checkCompHit()
+      if (!cellsFull) {
+        checkCompHit()
+      }
 
-      const bombDropLocation = Math.floor(Math.random() * cellCount)
-      if (shotsTaken.includes(bombDropLocation)) {
-        return droppingCompBombs()
+      if (compHit) {
+        persueCompHits()
       } else {
-        shotsTaken.push(bombDropLocation)
-        if (cellsPlayer[bombDropLocation].classList.contains('ship')) {
-          cellsPlayer[bombDropLocation].classList.remove('ship')
-          cellsPlayer[bombDropLocation].classList.add('ship-hit')
-          gameMessage.textContent = 'COMPUTER hit a ship! Players turn next'
-          //!add AUDIO HERE BOMB-HIT
-          checkPlayerSunk(bombDropLocation)
-          droppingPlayerBombs()
+
+      
+        const bombDropLocation = Math.floor(Math.random() * cellCount)
+        if (shotsTaken.includes(bombDropLocation)) {
+          return droppingCompBombs()
         } else {
-          cellsPlayer[bombDropLocation].classList.add('missed-shot')
-          gameMessage.textContent = 'COMPUTER missed, Players turn'
-          // console.log(bombDropLocation)
-          // console.log(shotsTaken)
-          //!add AUDIO HERE SPLASH
-          droppingPlayerBombs()
+          shotsTaken.push(bombDropLocation)
+          if (cellsPlayer[bombDropLocation].classList.contains('ship')) {
+            cellsPlayer[bombDropLocation].classList.remove('ship')
+            cellsPlayer[bombDropLocation].classList.add('ship-hit')
+            gameMessage.textContent = 'COMPUTER hit a ship! Players turn next'
+            //!add AUDIO HERE BOMB-HIT
+            cellsFull = false
+            checkPlayerSunk(bombDropLocation)
+            droppingPlayerBombs()
+          } else {
+            cellsPlayer[bombDropLocation].classList.add('missed-shot')
+            gameMessage.textContent = 'COMPUTER missed, Players turn'
+            // console.log(bombDropLocation)
+            // console.log(shotsTaken)
+            //!add AUDIO HERE SPLASH
+            cellsFull = false
+            droppingPlayerBombs()
+          }
         }
       }
       isPlaying = false
     }
 
-    //* Making COMPS next move if prevous shot was a hit ----------------------
+    //* COMP INTELLIGENCE, Creating COMPS next move if prevous shot was a hit --------------------------
 
+    //checking prevous shot was a hit
     function checkCompHit() {
       if (cellsPlayer[(shotsTaken[(shotsTaken.length - 1)])] === undefined) {
         console.log('dont worry ill check on the next go')
+        compHit = false
         return
       } else if (cellsPlayer[(shotsTaken[(shotsTaken.length - 1)])].classList.contains('ship-hit')) {
-        console.log('I hit a ship on my last go')
-        persueCompHits()
+        console.log('I hit a ship on my last go. My next choices are below')
+        compHit = true
         return
       } else {
+        compHit = false
         return
       }
     }
 
-
+    // creating array of next targets to choose from
     function persueCompHits() {
-      // const i = Math.floor(Math.random() * 4)
-      let targetedCompShot = []
+      let selection
+      let targetedCompShotSelections = []
       if (shotsTaken[(shotsTaken.length - 1)] === 0) {
-        targetedCompShot = [
-          (shotsTaken[(shotsTaken.length - 1)] + 1), 
-          (shotsTaken[(shotsTaken.length - 1)] + 10)
-        ]
-        console.log(targetedCompShot)
-      } else if (shotsTaken[(shotsTaken.length - 1)] === 99) {
-        targetedCompShot = [
-          (shotsTaken[(shotsTaken.length - 1)] - 1), 
-          (shotsTaken[(shotsTaken.length - 1)] - 10)
-        ]
-        console.log(targetedCompShot)
-      } else if (shotsTaken[(shotsTaken.length - 1)] <= 9) {
-        targetedCompShot = [
-          (shotsTaken[(shotsTaken.length - 1)] - 1), 
+        targetedCompShotSelections = [
           (shotsTaken[(shotsTaken.length - 1)] + 1),
           (shotsTaken[(shotsTaken.length - 1)] + 10)
         ]
-        console.log(targetedCompShot)
-      } else if (shotsTaken[(shotsTaken.length - 1)] >= 90) {
-        targetedCompShot = [
+        selection = Math.floor(Math.random() * 2)
+        console.log(targetedCompShotSelections)
+        console.log(selection)
+        console.log(`my next shot would be ${targetedCompShotSelections[selection]}`)
+
+      } else if (shotsTaken[(shotsTaken.length - 1)] === 99) {
+        targetedCompShotSelections = [
           (shotsTaken[(shotsTaken.length - 1)] - 1),
-          (shotsTaken[(shotsTaken.length - 1)] + 1), 
           (shotsTaken[(shotsTaken.length - 1)] - 10)
         ]
-        console.log(targetedCompShot)
-      } else {
-        targetedCompShot = [
-          (shotsTaken[(shotsTaken.length - 1)] - 1), 
-          (shotsTaken[(shotsTaken.length - 1)] + 1), 
-          (shotsTaken[(shotsTaken.length - 1)] - 10), 
+        selection = Math.floor(Math.random() * 2)
+        console.log(targetedCompShotSelections)
+        console.log(selection)
+        console.log(`my next shot would be ${targetedCompShotSelections[selection]}`)
+
+      } else if (shotsTaken[(shotsTaken.length - 1)] <= 9) {
+        targetedCompShotSelections = [
+          (shotsTaken[(shotsTaken.length - 1)] - 1),
+          (shotsTaken[(shotsTaken.length - 1)] + 1),
           (shotsTaken[(shotsTaken.length - 1)] + 10)
         ]
-        console.log(targetedCompShot)
+        selection = Math.floor(Math.random() * 3)
+        console.log(targetedCompShotSelections)
+        console.log(selection)
+        console.log(`my next shot would be ${targetedCompShotSelections[selection]}`)
+
+      } else if (shotsTaken[(shotsTaken.length - 1)] >= 90) {
+        targetedCompShotSelections = [
+          (shotsTaken[(shotsTaken.length - 1)] - 1),
+          (shotsTaken[(shotsTaken.length - 1)] + 1),
+          (shotsTaken[(shotsTaken.length - 1)] - 10)
+        ]
+        selection = Math.floor(Math.random() * 3)
+        console.log(targetedCompShotSelections)
+        console.log(selection)
+        console.log(`my next shot would be ${targetedCompShotSelections[selection]}`)
+
+      } else {
+        targetedCompShotSelections = [
+          (shotsTaken[(shotsTaken.length - 1)] - 1),
+          (shotsTaken[(shotsTaken.length - 1)] + 1),
+          (shotsTaken[(shotsTaken.length - 1)] - 10),
+          (shotsTaken[(shotsTaken.length - 1)] + 10)
+        ]
+        selection = Math.floor(Math.random() * 4)
+        console.log(targetedCompShotSelections)
+        console.log(selection)
+        console.log(`my next shot would be ${targetedCompShotSelections[selection]}`)
       }
-      return
+
+
+      //checking if new target has already been taken
+      if (targetedCompShotSelections.every(number => {
+        return shotsTaken.includes(number) === true
+      })) {
+        cellsFull = true
+        droppingCompBombs()
+      } else if (shotsTaken.includes(targetedCompShotSelections[selection])) {
+        persueCompHits()
+      } else {
+        shotsTaken.push(targetedCompShotSelections[selection])
+        if (cellsPlayer[targetedCompShotSelections[selection]].classList.contains('ship')) {
+          cellsPlayer[targetedCompShotSelections[selection]].classList.remove('ship')
+          cellsPlayer[targetedCompShotSelections[selection]].classList.add('ship-hit')
+          gameMessage.textContent = 'COMPUTER hit a ship! Players turn next'
+          //!add AUDIO HERE BOMB-HIT
+          cellsFull = false
+          checkPlayerSunk(targetedCompShotSelections[selection])
+          droppingPlayerBombs()
+        } else {
+          cellsPlayer[targetedCompShotSelections[selection]].classList.add('missed-shot')
+          gameMessage.textContent = 'COMPUTER missed, Players turn'
+          // console.log(bombDropLocation)
+          // console.log(shotsTaken)
+          //!add AUDIO HERE SPLASH
+          cellsFull = false
+          droppingPlayerBombs()
+        }      
+      }
     }
 
 
@@ -582,6 +645,7 @@ function init() {
           }
         }
       }
+      return
     }
     whoGoesFirst()
   }
@@ -593,20 +657,20 @@ function init() {
   function declareWinner() {
 
     if (compShip[0].isSunk === true &&
-      compShip[1].isSunk === true &&
-      compShip[2].isSunk === true &&
-      compShip[3].isSunk === true &&
-      compShip[4].isSunk === true) {
+    compShip[1].isSunk === true &&
+    compShip[2].isSunk === true &&
+    compShip[3].isSunk === true &&
+    compShip[4].isSunk === true) {
       console.log('CONGRATS')
       gameBoard.style.display = 'none'
       gameMessages.style.display = 'none'
       winnerBoard.style.display = 'flex'
       winnerMessage.textContent = 'Congratulations, you are the winner'
     } else if (ship[0].isSunk === true &&
-      ship[1].isSunk === true &&
-      ship[2].isSunk === true &&
-      ship[3].isSunk === true &&
-      ship[4].isSunk === true) {
+    ship[1].isSunk === true &&
+    ship[2].isSunk === true &&
+    ship[3].isSunk === true &&
+    ship[4].isSunk === true) {
       console.log('I WIN HAHAHAHAHAH')
       gameBoard.style.display = 'none'
       gameMessages.style.display = 'none'

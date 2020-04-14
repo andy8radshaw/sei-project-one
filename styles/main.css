@@ -34,7 +34,7 @@ header {
   height: 500px;
   width: 500px;
   margin: 20px;
-  color: rgba(0, 0, 0, 1);
+  color: rgba(0, 0, 0, 0);
 }
 
 .grid-player div.whole-grid-player {
@@ -64,7 +64,7 @@ header {
   height: 500px;
   width: 500px;
   margin: 20px;
-  color: rgba(0, 0, 0, 1);
+  color: rgba(0, 0, 0, 0);
 }
 
 .grid-comp div.whole-grid-comp {
@@ -76,7 +76,7 @@ header {
 }
 
 .grid-comp div.comp-ship {
-  background-color: lightseagreen;
+  /* background-color: lightseagreen; */
   background-repeat: no-repeat;
   background-size: contain;
 }
