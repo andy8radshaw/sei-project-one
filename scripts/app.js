@@ -481,7 +481,7 @@ function init() {
     })
     winnerBoard.style.display = 'none'
     gameBoard.style.display = 'flex'
-    gameMessage.textContent = 'I declare WAR. Arrange your ships and lets do BATTLE!'
+    gameMessage.innerHTML = 'INCOMING MESSAGE: <br/>I declare WAR. Arrange your ships and lets do BATTLE!...'
     shipSunkMessage.textContent = ''
     gameMessages.style.display = 'flex'
   }
@@ -527,7 +527,7 @@ function init() {
           audioPlayerMiss()
           setTimeout(() => {
             event.target.classList.add('missed-shot')
-            gameMessage.textContent = 'PLAYER missed, Computers turn next!'
+            gameMessage.textContent = 'Yoy can do better than that... MY TURN NOW'
             setTimeout(() => {
               isPlaying = true
               droppingCompBombs()
@@ -580,7 +580,7 @@ function init() {
             setTimeout(() => {
               
               cellsPlayer[bombDropLocation].classList.add('ship-hit')
-              gameMessage.textContent = 'COMPUTER hit a ship! Players turn next'
+              gameMessage.textContent = 'How\'d ya like me now?! TAKE THAT!... your turn.'
               cellsFull = false
               checkPlayerSunk(bombDropLocation)
               isPlaying = false
@@ -590,7 +590,7 @@ function init() {
             audioCompMiss()
             setTimeout(() => {
               cellsPlayer[bombDropLocation].classList.add('missed-shot')
-              gameMessage.textContent = 'COMPUTER missed, Players turn'
+              gameMessage.textContent = 'DAMMIT, I missed. I\'ll get you next time'
               // console.log(bombDropLocation)
               // console.log(shotsTaken)
               cellsFull = false
@@ -694,7 +694,7 @@ function init() {
           setTimeout(() => {
             
             cellsPlayer[targetedCompShotSelections[selection]].classList.add('ship-hit')
-            gameMessage.textContent = 'COMPUTER hit a ship! Players turn next'
+            gameMessage.textContent = 'HAHAHAH you\'re going to lose!!...'
             cellsFull = false
             checkPlayerSunk(targetedCompShotSelections[selection])
             isPlaying = false
@@ -705,7 +705,7 @@ function init() {
           audioCompMiss()
           setTimeout(() => {
             cellsPlayer[targetedCompShotSelections[selection]].classList.add('missed-shot')
-            gameMessage.textContent = 'COMPUTER missed, Players turn'
+            gameMessage.textContent = 'CLOSE.... I\'ll destroy you next time!'
             // console.log(bombDropLocation)
             // console.log(shotsTaken)
             //!add AUDIO HERE SPLASH
@@ -727,7 +727,7 @@ function init() {
           compShip[i].hitLocation.push(parseInt(event.target.textContent))
           if (compShip[i].hitLocation.length === compShip[i].location.length) {
             compShip[i].isSunk = true
-            shipSunkMessage.textContent = `You have sunk HMS ${compShip[i].name}! I will get you this time!`
+            shipSunkMessage.textContent = `You have sunk the enemies ${compShip[i].name}! `
             declareWinner()
           }
         }
@@ -740,7 +740,7 @@ function init() {
           ship[i].hitLocation.push(bombDropLocation)
           if (ship[i].hitLocation.length === ship[i].location.length) {
             ship[i].isSunk = true
-            shipSunkMessage.textContent = `I have sunk your ${ship[i].name}! MWA HAHAHAHA!`
+            shipSunkMessage.textContent = `Computer has sunk your ${ship[i].name}!`
             declareWinner()
           }
         }
