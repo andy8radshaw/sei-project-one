@@ -21,6 +21,7 @@ function init() {
   const playAgainBtn = document.querySelector('#play-again')
   const playerScore = document.querySelector('#player-score')
   const compScore = document.querySelector('#comp-score')
+  const audio = document.querySelector('#audio')
 
 
   //* grid variables
@@ -43,35 +44,40 @@ function init() {
       size: 2,
       location: [],
       hitLocation: [],
-      isSunk: false
+      isSunk: false,
+      isVerticle: true
     },
     {
       name: 'Submarine',
       size: 3,
       location: [],
       hitLocation: [],
-      isSunk: false
+      isSunk: false,
+      isVerticle: true
     },
     {
       name: 'Cruiser',
       size: 4,
       location: [],
       hitLocation: [],
-      isSunk: false
+      isSunk: false,
+      isVerticle: true
     },
     {
       name: 'Battleship',
       size: 5,
       location: [],
       hitLocation: [],
-      isSunk: false
+      isSunk: false,
+      isVerticle: true
     },
     {
       name: 'Carrier',
       size: 6,
       location: [],
       hitLocation: [],
-      isSunk: false
+      isSunk: false,
+      isVerticle: true
     }
   ]
 
@@ -81,35 +87,40 @@ function init() {
       size: 2,
       location: [],
       hitLocation: [],
-      isSunk: false
+      isSunk: false,
+      isVerticle: true
     },
     {
       name: 'Submarine',
       size: 3,
       location: [],
       hitLocation: [],
-      isSunk: false
+      isSunk: false,
+      isVerticle: true
     },
     {
       name: 'Cruiser',
       size: 4,
       location: [],
       hitLocation: [],
-      isSunk: false
+      isSunk: false,
+      isVerticle: true
     },
     {
       name: 'Battleship',
       size: 5,
       location: [],
       hitLocation: [],
-      isSunk: false
+      isSunk: false,
+      isVerticle: true
     },
     {
       name: 'Carrier',
       size: 6,
       location: [],
       hitLocation: [],
-      isSunk: false
+      isSunk: false,
+      isVerticle: true
     }
   ]
 
@@ -176,6 +187,7 @@ function init() {
         }
       }
       ship[shipIndex].location = currentShip //add current ship to the ship object
+      ship[shipIndex].isVerticle = true
       for (let i = 0; i < ship[shipIndex].location.length; i++) {
         cellsPlayer[ship[shipIndex].location[i]].classList.add('ship')
         //add index to reserved spaces array
@@ -213,6 +225,7 @@ function init() {
       }
       //add the current ship to the ship object
       ship[shipIndex].location = currentShip
+      ship[shipIndex].isVerticle = false
       for (let i = 0; i < ship[shipIndex].size; i++) {
         cellsPlayer[ship[shipIndex].location[i]].classList.add('ship')
         reservedSpaces.push(ship[shipIndex].location[i])
@@ -328,6 +341,8 @@ function init() {
     if (isStartPressed) return
     isStartPressed = true
     isRandomPressed = true
+    console.log(ship)
+    
     createGridComp()
     createAllCompShips()
     startGameActions()
@@ -422,10 +437,7 @@ function init() {
       } else {
         isPlaying = true
         gameMessage.textContent = 'I\'ll KICK THINGS OFF, How do you like THIS!'
-        //!add AUDIO HERE BOMB IN FLIGHT
-        setTimeout(() => {
-          droppingCompBombs()
-        }, 3000)
+        droppingCompBombs()
       }
     }
 
@@ -443,29 +455,30 @@ function init() {
         playersBombDrops.push(event.target.textContent)
 
         if (!event.target.classList.contains('comp-ship')) {
-          event.target.classList.add('missed-shot')
-          gameMessage.textContent = 'PLAYER missed, Computers turn next!'
-          //!add AUDIO HERE DROP N SPLASH
+          audioPlayerMiss()
           setTimeout(() => {
-            droppingCompBombs()
-          }, 1500)
-
+            event.target.classList.add('missed-shot')
+            gameMessage.textContent = 'PLAYER missed, Computers turn next!'
+            setTimeout(() => {
+              droppingCompBombs()
+            },1500)
+          }, 8000)
         } else {
           //removes and adds classes
-          //!add AUDIO HERE DROP N BOMB-HIT
-          gameMessage.textContent = 'Good shot, I\'ll get you this time!'
-          event.target.classList.remove('comp-ship')
-          event.target.classList.add('ship-hit')
-
-          // checks if whole ship is sank. 
-          checkCompSunk(event)
-
-
-          // now triggers the comp to drop bomb
-          //!add AUDIO HERE BOMB IN FLIGHT
+          audioPlayerHit()
           setTimeout(() => {
-            droppingCompBombs()
-          }, 1500)
+            gameMessage.textContent = 'Good shot, I\'ll get you this time!'
+            event.target.classList.remove('comp-ship')
+            event.target.classList.add('ship-hit')
+  
+            // checks if whole ship is sank. 
+            checkCompSunk(event)
+            setTimeout(() => {
+              droppingCompBombs()
+            },1500)
+            
+          }, 7500)
+          
         }
         isPlaying = true
       }
@@ -492,21 +505,25 @@ function init() {
         } else {
           shotsTaken.push(bombDropLocation)
           if (cellsPlayer[bombDropLocation].classList.contains('ship')) {
-            cellsPlayer[bombDropLocation].classList.remove('ship')
-            cellsPlayer[bombDropLocation].classList.add('ship-hit')
-            gameMessage.textContent = 'COMPUTER hit a ship! Players turn next'
-            //!add AUDIO HERE BOMB-HIT
-            cellsFull = false
-            checkPlayerSunk(bombDropLocation)
-            droppingPlayerBombs()
+            audioCompHit()
+            setTimeout(() => {
+              cellsPlayer[bombDropLocation].classList.remove('ship')
+              cellsPlayer[bombDropLocation].classList.add('ship-hit')
+              gameMessage.textContent = 'COMPUTER hit a ship! Players turn next'
+              cellsFull = false
+              checkPlayerSunk(bombDropLocation)
+              droppingPlayerBombs()
+            }, 6500)
           } else {
-            cellsPlayer[bombDropLocation].classList.add('missed-shot')
-            gameMessage.textContent = 'COMPUTER missed, Players turn'
-            // console.log(bombDropLocation)
-            // console.log(shotsTaken)
-            //!add AUDIO HERE SPLASH
-            cellsFull = false
-            droppingPlayerBombs()
+            audioCompMiss()
+            setTimeout(() => {
+              cellsPlayer[bombDropLocation].classList.add('missed-shot')
+              gameMessage.textContent = 'COMPUTER missed, Players turn'
+              // console.log(bombDropLocation)
+              // console.log(shotsTaken)
+              cellsFull = false
+              droppingPlayerBombs()
+            }, 5000)
           }
         }
       }
@@ -601,21 +618,27 @@ function init() {
       } else {
         shotsTaken.push(targetedCompShotSelections[selection])
         if (cellsPlayer[targetedCompShotSelections[selection]].classList.contains('ship')) {
-          cellsPlayer[targetedCompShotSelections[selection]].classList.remove('ship')
-          cellsPlayer[targetedCompShotSelections[selection]].classList.add('ship-hit')
-          gameMessage.textContent = 'COMPUTER hit a ship! Players turn next'
-          //!add AUDIO HERE BOMB-HIT
-          cellsFull = false
-          checkPlayerSunk(targetedCompShotSelections[selection])
-          droppingPlayerBombs()
+          audioCompHit()
+          setTimeout(() => {
+            cellsPlayer[targetedCompShotSelections[selection]].classList.remove('ship')
+            cellsPlayer[targetedCompShotSelections[selection]].classList.add('ship-hit')
+            gameMessage.textContent = 'COMPUTER hit a ship! Players turn next'
+            cellsFull = false
+            checkPlayerSunk(targetedCompShotSelections[selection])
+            droppingPlayerBombs()
+          }, 6500)
+          
         } else {
-          cellsPlayer[targetedCompShotSelections[selection]].classList.add('missed-shot')
-          gameMessage.textContent = 'COMPUTER missed, Players turn'
-          // console.log(bombDropLocation)
-          // console.log(shotsTaken)
-          //!add AUDIO HERE SPLASH
-          cellsFull = false
-          droppingPlayerBombs()
+          audioCompMiss()
+          setTimeout(() => {
+            cellsPlayer[targetedCompShotSelections[selection]].classList.add('missed-shot')
+            gameMessage.textContent = 'COMPUTER missed, Players turn'
+            // console.log(bombDropLocation)
+            // console.log(shotsTaken)
+            //!add AUDIO HERE SPLASH
+            cellsFull = false
+            droppingPlayerBombs()
+          }, 5000)
         }
       }
     }
@@ -651,6 +674,29 @@ function init() {
       return
     }
     whoGoesFirst()
+  }
+
+
+  //! AUDIO FUNCTIONS ---------------------------------------------------------------------
+
+  function audioCompHit() {
+    audio.src = './assets/audio/comp-hit.wav'
+    audio.play()
+  }
+
+  function audioCompMiss() {
+    audio.src = './assets/audio/comp-miss.wav'
+    audio.play()
+  }
+
+  function audioPlayerHit() {
+    audio.src = './assets/audio/player-hit.wav'
+    audio.play()
+  }
+
+  function audioPlayerMiss() {
+    audio.src = './assets/audio/player-miss.wav'
+    audio.play()
   }
 
 
