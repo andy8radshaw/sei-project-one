@@ -56,7 +56,7 @@ function init() {
       isVerticle: true
     },
     {
-      name: 'Cruiser',
+      name: 'Aircraft Carrier',
       size: 4,
       location: [],
       hitLocation: [],
@@ -64,7 +64,7 @@ function init() {
       isVerticle: true
     },
     {
-      name: 'Battleship',
+      name: 'Battle Cruiser',
       size: 5,
       location: [],
       hitLocation: [],
@@ -72,7 +72,7 @@ function init() {
       isVerticle: true
     },
     {
-      name: 'Carrier',
+      name: 'Mega Cruiser',
       size: 6,
       location: [],
       hitLocation: [],
@@ -99,7 +99,7 @@ function init() {
       isVerticle: true
     },
     {
-      name: 'Cruiser',
+      name: 'Aircraft Carrier',
       size: 4,
       location: [],
       hitLocation: [],
@@ -107,7 +107,7 @@ function init() {
       isVerticle: true
     },
     {
-      name: 'Battleship',
+      name: 'Battle Cruiser',
       size: 5,
       location: [],
       hitLocation: [],
@@ -115,7 +115,7 @@ function init() {
       isVerticle: true
     },
     {
-      name: 'Carrier',
+      name: 'Mega Cruiser',
       size: 6,
       location: [],
       hitLocation: [],
@@ -239,6 +239,7 @@ function init() {
     ships.forEach((currentValue, index) => {
       createShip(currentValue, index)
     })
+    playerShipImages()
   }
 
 
@@ -321,6 +322,7 @@ function init() {
         reservedSpaces.push(compShip[shipIndex].location[i])
       }
     }
+    
     horizontalOrVertical()
   }
 
@@ -332,6 +334,21 @@ function init() {
   }
 
 
+  //! ADDING IMAGES TO THE SHIPS ------------------------------------------------------------
+
+  function playerShipImages() {
+    ship.forEach(boat => {
+      console.log(boat.isVerticle)   
+    })
+    if (ship[0].isVerticle === true) {
+      cellsPlayer[ship[0].location[0]].classList.add('destroyer-vert-one')
+    } else {
+      cellsPlayer[ship[0].location[0]].classList.add('destroyer-hori-one')
+    }
+  }
+  
+  
+
 
 
   //! BUTTON CONTROLLERS -------------------------------------------------------------------
@@ -341,7 +358,7 @@ function init() {
     if (isStartPressed) return
     isStartPressed = true
     isRandomPressed = true
-    console.log(ship)
+    gridComp.style.display = 'flex'
     
     createGridComp()
     createAllCompShips()
@@ -356,7 +373,8 @@ function init() {
     reservedSpaces = []
     const wholeGridCells = document.querySelectorAll('.whole-grid-player')
     wholeGridCells.forEach(element => {
-      element.classList.remove('ship')
+      element.classList = 'whole-grid-player'
+      
     })
     for (let i = 0; i < ships.length; i++) {
       ship[i].location = []
@@ -448,8 +466,9 @@ function init() {
     //* Players gameplay ----------------------------------
     const playersBombDrops = []
     function droppingPlayerBombs(event) {
-      if (isPlaying) return
-      if (playersBombDrops.includes(event.target.textContent)) {
+      if (isPlaying) {
+        return
+      } else if (playersBombDrops.includes(event.target.textContent)) {
         gameMessage.textContent = 'You already picked this square dummy! TRY AGAIN'
       } else {
         playersBombDrops.push(event.target.textContent)
@@ -460,6 +479,7 @@ function init() {
             event.target.classList.add('missed-shot')
             gameMessage.textContent = 'PLAYER missed, Computers turn next!'
             setTimeout(() => {
+              isPlaying = true
               droppingCompBombs()
             },1500)
           }, 8000)
@@ -474,6 +494,7 @@ function init() {
             // checks if whole ship is sank. 
             checkCompSunk(event)
             setTimeout(() => {
+              isPlaying = true
               droppingCompBombs()
             },1500)
             
@@ -512,6 +533,7 @@ function init() {
               gameMessage.textContent = 'COMPUTER hit a ship! Players turn next'
               cellsFull = false
               checkPlayerSunk(bombDropLocation)
+              isPlaying = false
               droppingPlayerBombs()
             }, 6500)
           } else {
@@ -522,12 +544,12 @@ function init() {
               // console.log(bombDropLocation)
               // console.log(shotsTaken)
               cellsFull = false
+              isPlaying = false
               droppingPlayerBombs()
             }, 5000)
           }
         }
       }
-      isPlaying = false
     }
 
     //* COMP INTELLIGENCE, Creating COMPS next move if prevous shot was a hit --------------------------
@@ -625,6 +647,7 @@ function init() {
             gameMessage.textContent = 'COMPUTER hit a ship! Players turn next'
             cellsFull = false
             checkPlayerSunk(targetedCompShotSelections[selection])
+            isPlaying = false
             droppingPlayerBombs()
           }, 6500)
           
@@ -637,6 +660,7 @@ function init() {
             // console.log(shotsTaken)
             //!add AUDIO HERE SPLASH
             cellsFull = false
+            isPlaying = false
             droppingPlayerBombs()
           }, 5000)
         }

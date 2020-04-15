@@ -5,14 +5,29 @@
 body {
   height: 100vh;
   margin: 0 auto;
+  background-color: tan;
+  font-family: 'Orbitron', sans-serif;
+  background-image: url(../assets/images/wood.jpeg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
 }
 
 header {
-  height: 10vh;
+  height: 15vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+h1 {
+  padding: 30px, 0, 10px, 0;
+  margin: 30px, 0;
+  font-size: 90px;
+  text-shadow: 0 0 25px 0 rgba(0, 0, 0, 1);
+  color: white;
 }
 
 
@@ -27,7 +42,7 @@ header {
 
 .grid-player {
   align-items: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 1);
   display: flex;
   flex-wrap: wrap;
   height: 100%;
@@ -36,6 +51,8 @@ header {
   width: 600px;
   margin: 20px;
   color: rgba(0, 0, 0, 0);
+  background: rgb(39,181,218);
+  background: linear-gradient(58deg, rgba(39,181,218,1) 5%, rgba(17,113,221,1) 19%, rgba(125,184,255,1) 30%, rgba(6,178,201,1) 54%, rgba(6,26,170,1) 78%, rgba(64,135,215,1) 89%, rgba(107,124,247,1) 97%);
 }
 
 .grid-player div.whole-grid-player {
@@ -46,11 +63,9 @@ header {
   }
 
 .grid-player div.ship {
-  /* background: rgb(158,158,158);
-  background: linear-gradient(90deg, rgba(158,158,158,0) 18%, rgba(87,87,87,1) 22%, rgba(171,171,171,1) 54%, rgba(136,136,136,1) 78%, rgba(158,158,158,0) 82%); */
-  background-color: mediumpurple;
+  /* background-color: mediumpurple;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: contain; */
 }
 
 /* Computer grid CSS */
@@ -58,7 +73,7 @@ header {
 .grid-comp {
   align-items: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-  display: flex;
+  display: none;
   flex-wrap: wrap;
   height: 100%;
   justify-content: center;
@@ -66,6 +81,8 @@ header {
   width: 600px;
   margin: 20px;
   color: rgba(0, 0, 0, 0);
+  background: rgb(39,181,218);
+  background: linear-gradient(263deg, rgba(39,181,218,1) 5%, rgba(17,113,221,1) 19%, rgba(125,184,255,1) 30%, rgba(6,178,201,1) 54%, rgba(6,26,170,1) 78%, rgba(64,135,215,1) 89%, rgba(107,124,247,1) 97%);
 }
 
 .grid-comp div.whole-grid-comp {
@@ -77,7 +94,7 @@ header {
 }
 
 .grid-comp div.comp-ship {
-  /* background-color: lightseagreen; */
+  background-color: lightseagreen;
   background-repeat: no-repeat;
   background-size: contain;
 }
@@ -106,6 +123,7 @@ button {
   padding: 10px;
   margin: 40px;
   width: 150px;
+  color: black;
 }
 
 /* Game Messages styles */
@@ -115,7 +133,7 @@ section.game-messages {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 25vh;
+  height: 20vh;
 }
 
 
@@ -143,3 +161,148 @@ div.winner-board {
   align-items: center;
   margin: 0 auto
 }
+
+
+/*  SHIP IMAGES --------------------------------------------------- */ 
+
+/* Destroyer Vertical*/
+.destroyer-vert-one {
+  background-color: rgb(0, 0, 0);
+}
+.destroyer-vert-two {
+  background-color: rgb(50, 50, 50);
+}
+
+/* Destroyer Horizontal*/
+.destroyer-hori-one {
+  background-color: rgb(0, 0, 0);
+}
+.destroyer-hori-two {
+  background-color: rgb(50, 50, 50);
+}
+
+/* Submarine Vertical*/
+.submarine-vert-one {
+  background-color: rgb(255, 0, 0);
+}
+.submarine-vert-two {
+  background-color: rgb(255, 50, 50);
+}
+.submarine-vert-three {
+  background-color: rgb(255, 100, 100);
+}
+
+/* Submarine Horizontal*/
+.submarine-hori-one {
+  background-color: rgb(255, 0, 0);
+}
+.submarine-hori-two {
+  background-color: rgb(255, 50, 50);
+}
+.submarine-hori-three {
+  background-color: rgb(255, 100, 100);
+}
+
+/* Aircraft Carrier Vertical*/
+.carrier-vert-one {
+  background-color: rgb(0, 255, 0);
+}
+.carrier-vert-two {
+  background-color: rgb(50, 255, 50);
+}
+.carrier-vert-three {
+  background-color: rgb(100, 255, 100);
+}
+.carrier-vert-four {
+  background-color: rgb(150, 255, 150);
+}
+
+/* Aircraft Carrier Horizontal*/
+.carrier-hori-one {
+  background-color: rgb(0, 255, 0);
+}
+.carrier-hori-two {
+  background-color: rgb(50, 255, 50);
+}
+.carrier-hori-three {
+  background-color: rgb(100, 255, 100);
+}
+.carrier-hori-four {
+  background-color: rgb(150, 255, 150);
+}
+
+/* Battle Cruiser Vertical*/
+.battle-vert-one {
+  background-color: rgb(0, 0, 255);
+}
+.battle-vert-two {
+  background-color: rgb(50, 50, 255);
+}
+.battle-vert-three {
+  background-color: rgb(100, 100, 255);
+}
+.battle-vert-four {
+  background-color: rgb(150, 150, 255);
+}
+.battle-vert-five {
+  background-color: rgb(200, 200, 255);
+}
+
+/* Battle Cruiser Horizontal*/
+.battle-hori-one {
+  background-color: rgb(0, 0, 255,);
+}
+.battle-hori-two {
+  background-color: rgb(50, 50, 255);
+}
+.battle-hori-three {
+  background-color: rgb(100, 100, 255);
+}
+.battle-hori-four {
+  background-color: rgb(150, 150, 255);
+}
+.battle-hori-five {
+  background-color: rgb(200, 200, 255);
+}
+
+/* MEGA Cruiser Vertical*/
+.mega-vert-one {
+  background-color: rgb(0, 0, 255);
+}
+.mega-vert-two {
+  background-color: rgb(50, 50, 255);
+}
+.mega-vert-three {
+  background-color: rgb(100, 100, 255);
+}
+.mega-vert-four {
+  background-color: rgb(150, 150, 255);
+}
+.mega-vert-five {
+  background-color: rgb(200, 200, 255);
+}
+.mega-vert-six {
+  background-color: rgb(200, 200, 255);
+}
+
+/* MEGA Cruiser Horizontal*/
+.mega-hori-one {
+  background-color: rgb(255, 0, 255,);
+}
+.mega-hori-two {
+  background-color: rgb(255, 50, 255);
+}
+.mega-hori-three {
+  background-color: rgb(255, 100, 255);
+}
+.mega-hori-four {
+  background-color: rgb(255, 150, 255);
+}
+.mega-hori-five {
+  background-color: rgb(255, 200, 255);
+}
+.mega-hori-six {
+  background-color: rgb(255, 200, 255);
+}
+
+
