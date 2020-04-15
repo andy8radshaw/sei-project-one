@@ -94,13 +94,13 @@ h1 {
 }
 
 .grid-comp div.comp-ship {
-  background-color: lightseagreen;
+  background-color: rgb(255, 0, 0);
   background-repeat: no-repeat;
   background-size: contain;
 }
 
 .ship-hit {
-  background-color: orangered;
+  background-image: url(../assets/explosion.png);
   background-repeat: no-repeat;
   background-size: contain;
 }
@@ -170,7 +170,7 @@ div.winner-board {
   background-color: rgb(0, 0, 0);
 }
 .destroyer-vert-two {
-  background-color: rgb(50, 50, 50);
+  background-color: rgb(80, 80, 80);
 }
 
 /* Destroyer Horizontal*/
@@ -178,7 +178,7 @@ div.winner-board {
   background-color: rgb(0, 0, 0);
 }
 .destroyer-hori-two {
-  background-color: rgb(50, 50, 50);
+  background-color: rgb(80, 80, 80);
 }
 
 /* Submarine Vertical*/
@@ -267,27 +267,27 @@ div.winner-board {
 
 /* MEGA Cruiser Vertical*/
 .mega-vert-one {
-  background-color: rgb(0, 0, 255);
+  background-color: rgb(255, 0, 255);
 }
 .mega-vert-two {
-  background-color: rgb(50, 50, 255);
+  background-color: rgb(255, 50, 255);
 }
 .mega-vert-three {
-  background-color: rgb(100, 100, 255);
+  background-color: rgb(255, 100, 255);
 }
 .mega-vert-four {
-  background-color: rgb(150, 150, 255);
+  background-color: rgb(255, 150, 255);
 }
 .mega-vert-five {
-  background-color: rgb(200, 200, 255);
+  background-color: rgb(255, 200, 255);
 }
 .mega-vert-six {
-  background-color: rgb(200, 200, 255);
+  background-color: rgb(255, 250, 255);
 }
 
 /* MEGA Cruiser Horizontal*/
 .mega-hori-one {
-  background-color: rgb(255, 0, 255,);
+  background-color: rgb(255, 0, 255);
 }
 .mega-hori-two {
   background-color: rgb(255, 50, 255);
@@ -302,7 +302,7 @@ div.winner-board {
   background-color: rgb(255, 200, 255);
 }
 .mega-hori-six {
-  background-color: rgb(255, 200, 255);
+  background-color: rgb(255, 250, 255);
 }
 
 

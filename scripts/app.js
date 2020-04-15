@@ -342,8 +342,58 @@ function init() {
     })
     if (ship[0].isVerticle === true) {
       cellsPlayer[ship[0].location[0]].classList.add('destroyer-vert-one')
+      cellsPlayer[ship[0].location[1]].classList.add('destroyer-vert-two')
     } else {
       cellsPlayer[ship[0].location[0]].classList.add('destroyer-hori-one')
+      cellsPlayer[ship[0].location[1]].classList.add('destroyer-hori-two')
+    }
+    if (ship[1].isVerticle === true) {
+      cellsPlayer[ship[1].location[0]].classList.add('submarine-vert-one')
+      cellsPlayer[ship[1].location[1]].classList.add('submarine-vert-two')
+      cellsPlayer[ship[1].location[2]].classList.add('submarine-vert-three')
+    } else {
+      cellsPlayer[ship[1].location[0]].classList.add('submarine-hori-one')
+      cellsPlayer[ship[1].location[1]].classList.add('submarine-hori-two')
+      cellsPlayer[ship[1].location[2]].classList.add('submarine-hori-three')
+    }
+    if (ship[2].isVerticle === true) {
+      cellsPlayer[ship[2].location[0]].classList.add('carrier-vert-one')
+      cellsPlayer[ship[2].location[1]].classList.add('carrier-vert-two')
+      cellsPlayer[ship[2].location[2]].classList.add('carrier-vert-three')
+      cellsPlayer[ship[2].location[3]].classList.add('carrier-vert-four')
+    } else {
+      cellsPlayer[ship[2].location[0]].classList.add('carrier-hori-one')
+      cellsPlayer[ship[2].location[1]].classList.add('carrier-hori-two')
+      cellsPlayer[ship[2].location[2]].classList.add('carrier-hori-three')
+      cellsPlayer[ship[2].location[3]].classList.add('carrier-hori-four')
+    }
+    if (ship[3].isVerticle === true) {
+      cellsPlayer[ship[3].location[0]].classList.add('battle-vert-one')
+      cellsPlayer[ship[3].location[1]].classList.add('battle-vert-two')
+      cellsPlayer[ship[3].location[2]].classList.add('battle-vert-three')
+      cellsPlayer[ship[3].location[3]].classList.add('battle-vert-four')
+      cellsPlayer[ship[3].location[4]].classList.add('battle-vert-five')
+    } else {
+      cellsPlayer[ship[3].location[0]].classList.add('battle-hori-one')
+      cellsPlayer[ship[3].location[1]].classList.add('battle-hori-two')
+      cellsPlayer[ship[3].location[2]].classList.add('battle-hori-three')
+      cellsPlayer[ship[3].location[3]].classList.add('battle-hori-four')
+      cellsPlayer[ship[3].location[4]].classList.add('battle-hori-five')
+    }
+    if (ship[4].isVerticle === true) {
+      cellsPlayer[ship[4].location[0]].classList.add('mega-vert-one')
+      cellsPlayer[ship[4].location[1]].classList.add('mega-vert-two')
+      cellsPlayer[ship[4].location[2]].classList.add('mega-vert-three')
+      cellsPlayer[ship[4].location[3]].classList.add('mega-vert-four')
+      cellsPlayer[ship[4].location[4]].classList.add('mega-vert-five')
+      cellsPlayer[ship[4].location[5]].classList.add('mega-vert-six')
+    } else {
+      cellsPlayer[ship[4].location[0]].classList.add('mega-hori-one')
+      cellsPlayer[ship[4].location[1]].classList.add('mega-hori-two')
+      cellsPlayer[ship[4].location[2]].classList.add('mega-hori-three')
+      cellsPlayer[ship[4].location[3]].classList.add('mega-hori-four')
+      cellsPlayer[ship[4].location[4]].classList.add('mega-hori-five')
+      cellsPlayer[ship[4].location[5]].classList.add('mega-hori-six')
     }
   }
   
@@ -447,8 +497,8 @@ function init() {
 
     // * Who goes first ------------------------
     function whoGoesFirst() {
-      const num = Math.floor(Math.random() * 2)
-      // const num = 0
+      // const num = Math.floor(Math.random() * 2)
+      const num = 0
       if (num === 0) {
         gameMessage.textContent = 'YOUR TURN, Lets see what you\'ve got!'
 
@@ -488,7 +538,7 @@ function init() {
           audioPlayerHit()
           setTimeout(() => {
             gameMessage.textContent = 'Good shot, I\'ll get you this time!'
-            event.target.classList.remove('comp-ship')
+            
             event.target.classList.add('ship-hit')
   
             // checks if whole ship is sank. 
@@ -528,7 +578,7 @@ function init() {
           if (cellsPlayer[bombDropLocation].classList.contains('ship')) {
             audioCompHit()
             setTimeout(() => {
-              cellsPlayer[bombDropLocation].classList.remove('ship')
+              
               cellsPlayer[bombDropLocation].classList.add('ship-hit')
               gameMessage.textContent = 'COMPUTER hit a ship! Players turn next'
               cellsFull = false
@@ -642,7 +692,7 @@ function init() {
         if (cellsPlayer[targetedCompShotSelections[selection]].classList.contains('ship')) {
           audioCompHit()
           setTimeout(() => {
-            cellsPlayer[targetedCompShotSelections[selection]].classList.remove('ship')
+            
             cellsPlayer[targetedCompShotSelections[selection]].classList.add('ship-hit')
             gameMessage.textContent = 'COMPUTER hit a ship! Players turn next'
             cellsFull = false
