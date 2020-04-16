@@ -406,8 +406,6 @@ function init() {
     if (isStartPressed) return
     isStartPressed = true
     isRandomPressed = true
-    gridComp.style.display = 'flex'
-    
     createGridComp()
     createAllCompShips()
     startGameActions()

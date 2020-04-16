@@ -45,7 +45,7 @@ h1 {
 .grid-wrapper {
   height: 55vh;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   border: 3px solid white;
 }
@@ -61,7 +61,7 @@ h1 {
   justify-content: center;
   height: 600px;
   width: 600px;
-  margin: 20px;
+  margin: 70px;
   color: rgba(0, 0, 0, 0);
   background: rgb(39, 181, 218);
   background: linear-gradient(58deg, rgba(39, 181, 218, 1) 5%, rgba(17, 113, 221, 1) 19%, rgba(125, 184, 255, 1) 30%, rgba(6, 178, 201, 1) 54%, rgba(6, 26, 170, 1) 78%, rgba(64, 135, 215, 1) 89%, rgba(107, 124, 247, 1) 97%);
@@ -89,13 +89,13 @@ h1 {
 .grid-comp {
   align-items: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 1);
-  display: none;
+  display: flex;
   flex-wrap: wrap;
   height: 100%;
   justify-content: center;
   height: 600px;
   width: 600px;
-  margin: 20px;
+  margin: 70px;
   color: rgba(0, 0, 0, 0);
   background: rgb(39, 181, 218);
   background: linear-gradient(263deg, rgba(39, 181, 218, 1) 5%, rgba(17, 113, 221, 1) 19%, rgba(125, 184, 255, 1) 30%, rgba(6, 178, 201, 1) 54%, rgba(6, 26, 170, 1) 78%, rgba(64, 135, 215, 1) 89%, rgba(107, 124, 247, 1) 97%);
@@ -109,13 +109,30 @@ h1 {
 }
 
 .grid-comp div.comp-ship {
-  background-color: rgb(255, 0, 0);
+  /* background-color: rgb(255, 0, 0); */
+  
+  height: 60px;
+  width: 60px;
   /* background-image: url(../assets/images/megacruiser/megacruiser-h5.png); */
   background-repeat: no-repeat;
   background-size: contain;
 }
 
-.ship-hit {
+.grid-comp .ship-hit::before {
+  content:'';
+  height: 60px;
+  width: 60px;
+  position: absolute;
+  background-image: url(../assets/images/explosion.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.grid-player .ship-hit::before {
+  content:'';
+  height: 60px;
+  width: 60px;
+  position: absolute;
   background-image: url(../assets/images/explosion.png);
   background-repeat: no-repeat;
   background-size: contain;
@@ -223,85 +240,121 @@ div.winner-board {
 /* Destroyer Vertical*/
 
 .destroyer-vert-one {
-  background-color: rgb(0, 0, 0);
+  background-image: url(../assets/images/destroyer/destroyer-v1.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .destroyer-vert-two {
-  background-color: rgb(80, 80, 80);
+  background-image: url(../assets/images/destroyer/destroyer-v2.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 /* Destroyer Horizontal*/
 
 .destroyer-hori-one {
-  background-color: rgb(0, 0, 0);
+  background-image: url(../assets/images/destroyer/destroyer-h1.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .destroyer-hori-two {
-  background-color: rgb(80, 80, 80);
+  background-image: url(../assets/images/destroyer/destroyer-h2.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 /* Submarine Vertical*/
 
 .submarine-vert-one {
-  background-color: rgb(255, 0, 0);
+  background-image: url(../assets/images/submarine/submarine-v1.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .submarine-vert-two {
-  background-color: rgb(255, 50, 50);
+  background-image: url(../assets/images/submarine/submarine-v2.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .submarine-vert-three {
-  background-color: rgb(255, 100, 100);
+  background-image: url(../assets/images/submarine/submarine-v3.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 /* Submarine Horizontal*/
 
 .submarine-hori-one {
-  background-color: rgb(255, 0, 0);
+  background-image: url(../assets/images/submarine/submarine-h1.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .submarine-hori-two {
-  background-color: rgb(255, 50, 50);
+  background-image: url(../assets/images/submarine/submarine-h2.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .submarine-hori-three {
-  background-color: rgb(255, 100, 100);
+  background-image: url(../assets/images/submarine/submarine-h3.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 /* Aircraft Carrier Vertical*/
 
 .carrier-vert-one {
-  background-color: rgb(0, 255, 0);
+  background-image: url(../assets/images/carrier/carrier-v1.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .carrier-vert-two {
-  background-color: rgb(50, 255, 50);
+  background-image: url(../assets/images/carrier/carrier-v2.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .carrier-vert-three {
-  background-color: rgb(100, 255, 100);
+  background-image: url(../assets/images/carrier/carrier-v3.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .carrier-vert-four {
-  background-color: rgb(150, 255, 150);
+  background-image: url(../assets/images/carrier/carrier-v4.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 /* Aircraft Carrier Horizontal*/
 
 .carrier-hori-one {
-  background-color: rgb(0, 255, 0);
+  background-image: url(../assets/images/carrier/carrier-h1.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .carrier-hori-two {
-  background-color: rgb(50, 255, 50);
+  background-image: url(../assets/images/carrier/carrier-h2.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .carrier-hori-three {
-  background-color: rgb(100, 255, 100);
+  background-image: url(../assets/images/carrier/carrier-h3.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .carrier-hori-four {
-  background-color: rgb(150, 255, 150);
+  background-image: url(../assets/images/carrier/carrier-h4.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 /* Battle Cruiser Vertical*/
