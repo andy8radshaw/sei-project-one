@@ -37,6 +37,7 @@ function init() {
   let isPlaying = false
   let playerCurrentScore = 0
   let compCurrentScore = 0
+  let playerWinner = false
   const ships = [2, 3, 4, 5, 6]
   const ship = [
     {
@@ -337,9 +338,6 @@ function init() {
   //! ADDING IMAGES TO THE SHIPS ------------------------------------------------------------
 
   function playerShipImages() {
-    ship.forEach(boat => {
-      console.log(boat.isVerticle)   
-    })
     if (ship[0].isVerticle === true) {
       cellsPlayer[ship[0].location[0]].classList.add('destroyer-vert-one')
       cellsPlayer[ship[0].location[1]].classList.add('destroyer-vert-two')
@@ -469,6 +467,7 @@ function init() {
     isPlaying = false
     playerCurrentScore = 0
     compCurrentScore = 0
+    playerWinner = false
     ship.forEach(ship => {
       ship.location = []
       ship.hitLocation = []
@@ -494,9 +493,10 @@ function init() {
   // ! GAMEPLAY ------------------------------------------------------------------------
 
   function startGameActions() {
-
+    if (playerWinner) return
     // * Who goes first ------------------------
     function whoGoesFirst() {
+      if (playerWinner) return
       // const num = Math.floor(Math.random() * 2)
       const num = 0
       if (num === 0) {
@@ -516,6 +516,7 @@ function init() {
     //* Players gameplay ----------------------------------
     const playersBombDrops = []
     function droppingPlayerBombs(event) {
+      if (playerWinner) return
       if (isPlaying) {
         return
       } else if (playersBombDrops.includes(event.target.textContent)) {
@@ -527,13 +528,14 @@ function init() {
           audioPlayerMiss()
           setTimeout(() => {
             event.target.classList.add('missed-shot')
-            gameMessage.textContent = 'Yoy can do better than that... MY TURN NOW'
+            gameMessage.textContent = 'You can do better than that... MY TURN NOW'
             setTimeout(() => {
               isPlaying = true
               droppingCompBombs()
             },1500)
           }, 8000)
         } else {
+          if (playerWinner) return
           //removes and adds classes
           audioPlayerHit()
           setTimeout(() => {
@@ -543,6 +545,7 @@ function init() {
   
             // checks if whole ship is sank. 
             checkCompSunk(event)
+            if (playerWinner) return
             setTimeout(() => {
               isPlaying = true
               droppingCompBombs()
@@ -562,6 +565,7 @@ function init() {
     let compHit = false
 
     function droppingCompBombs() {
+      if (playerWinner) return
 
       if (!cellsFull) {
         checkCompHit()
@@ -606,6 +610,7 @@ function init() {
 
     //checking prevous shot was a hit
     function checkCompHit() {
+      if (playerWinner) return
       if (cellsPlayer[(shotsTaken[(shotsTaken.length - 1)])] === undefined) {
         compHit = false
         return
@@ -620,6 +625,7 @@ function init() {
 
     // creating array of next targets to choose from
     function persueCompHits() {
+      if (playerWinner) return
       let selection
       let targetedCompShotSelections = []
       if (shotsTaken[(shotsTaken.length - 1)] === 0) {
@@ -735,6 +741,7 @@ function init() {
     }
     // Player
     function checkPlayerSunk(bombDropLocation) {
+      if (playerWinner) return
       for (let i = 0; i < ship.length; i++) {
         if (ship[i].location.includes(bombDropLocation)) {
           ship[i].hitLocation.push(bombDropLocation)
@@ -785,12 +792,15 @@ function init() {
     compShip[3].isSunk === true &&
     compShip[4].isSunk === true) {
       console.log('CONGRATS')
-      gameBoard.style.display = 'none'
-      gameMessages.style.display = 'none'
-      winnerBoard.style.display = 'flex'
-      winnerMessage.textContent = 'Congratulations, you are the winner'
-      playerCurrentScore++
-      playerScore.textContent = `${playerCurrentScore}`
+      playerWinner = true
+      setTimeout(() =>{
+        gameBoard.style.display = 'none'
+        gameMessages.style.display = 'none'
+        winnerBoard.style.display = 'flex'
+        winnerMessage.textContent = 'Congratulations, you are the winner'
+        playerCurrentScore++
+        playerScore.textContent = `${playerCurrentScore}`
+      }, 5000)
     } else if (ship[0].isSunk === true &&
     ship[1].isSunk === true &&
     ship[2].isSunk === true &&

@@ -28,7 +28,7 @@ h1 {
   margin: 30px, 0;
   font-size: 90px;
   font-weight: 800;
-  text-shadow: 0px 0px 20px #000000
+  text-shadow: 0px 0px 15px #000000;
   color: white;
 }
 
@@ -38,6 +38,7 @@ h1 {
   justify-content: center;
   align-items: center;
   border: 3px solid white;
+  text-shadow: 0px 0px 15px #000000;
   font-size: 24px;
 }
 
@@ -67,23 +68,27 @@ h1 {
 }
 
 .grid-player div.whole-grid-player {
-  border: 1px solid lightgrey;
+  border: 1px dashed rgba(57, 53, 54, 0.2);
   flex-grow: 1;
   height: 10%;
   width: 10%;
 }
 
+.grid-player p {
+  margin: 0;
+  padding: 0;
+  float: left;
+}
+
 .grid-player div.ship {
-  /* background-color: mediumpurple;
-  background-repeat: no-repeat;
-  background-size: contain; */
+  border: none;
 }
 
 /* Computer grid CSS */
 
 .grid-comp {
   align-items: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 1);
   display: none;
   flex-wrap: wrap;
   height: 100%;
@@ -97,14 +102,15 @@ h1 {
 }
 
 .grid-comp div.whole-grid-comp {
-  border: 1px solid lightgrey;
+  border: 1px dashed rgba(57, 53, 54, 0.2);
   flex-grow: 1;
   height: 10%;
   width: 10%;
 }
 
 .grid-comp div.comp-ship {
-  /* background-color: rgb(255, 0, 0); */
+  background-color: rgb(255, 0, 0);
+  /* background-image: url(../assets/images/megacruiser/megacruiser-h5.png); */
   background-repeat: no-repeat;
   background-size: contain;
 }
@@ -156,7 +162,7 @@ section.game-messages {
   align-items: center;
   width: 50%;
   height: 100%;
-  border: 30px solid rgb(30, 20, 30);
+  border: 30px outset rgb(30, 20, 30);
   background: rgb(138, 123, 111);
   background: radial-gradient(circle, rgba(138, 123, 111, 1) 0%, rgba(57, 53, 54, 1) 98%);
   font-size: 30px;
@@ -171,7 +177,7 @@ section.game-messages {
   align-items: center;
   width: 50%;
   height: 100%;
-  border: 30px solid rgb(30, 20, 30);
+  border: 30px outset rgb(30, 20, 30);
   background: rgb(138, 123, 111);
   background: radial-gradient(circle, rgba(138, 123, 111, 1) 0%, rgba(57, 53, 54, 1) 98%);
   font-size: 30px;
@@ -301,95 +307,139 @@ div.winner-board {
 /* Battle Cruiser Vertical*/
 
 .battle-vert-one {
-  background-color: rgb(255, 255, 25);
+  background-image: url(../assets/images/battleship/Battleship-v1.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .battle-vert-two {
-  background-color: rgb(200, 200, 20);
+  background-image: url(../assets/images/battleship/Battleship-v2.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .battle-vert-three {
-  background-color: rgb(150, 150, 15);
+  background-image: url(../assets/images/battleship/Battleship-v3.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .battle-vert-four {
-  background-color: rgb(100, 100, 10);
+  background-image: url(../assets/images/battleship/Battleship-v4.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .battle-vert-five {
-  background-color: rgb(50, 50, 5);
+  background-image: url(../assets/images/battleship/Battleship-v5.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 /* Battle Cruiser Horizontal*/
 
 .battle-hori-one {
-  background-color: rgb(255, 255, 25);
+  background-image: url(../assets/images/battleship/Battleship-h1.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .battle-hori-two {
-  background-color: rgb(200, 200, 20);
+  background-image: url(../assets/images/battleship/Battleship-h2.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .battle-hori-three {
-  background-color: rgb(150, 150, 15);
+  background-image: url(../assets/images/battleship/Battleship-h3.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .battle-hori-four {
-  background-color: rgb(100, 100, 10);
+  background-image: url(../assets/images/battleship/Battleship-h4.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .battle-hori-five {
-  background-color: rgb(50, 50, 5);
+  background-image: url(../assets/images/battleship/Battleship-h5.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 /* MEGA Cruiser Vertical*/
 
 .mega-vert-one {
-  background-color: rgb(255, 0, 255);
+  background-image: url(../assets/images/megacruiser/megacruiser-v1.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .mega-vert-two {
-  background-color: rgb(255, 50, 255);
+  background-image: url(../assets/images/megacruiser/megacruiser-v2.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .mega-vert-three {
-  background-color: rgb(255, 100, 255);
+  background-image: url(../assets/images/megacruiser/megacruiser-v3.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .mega-vert-four {
-  background-color: rgb(255, 150, 255);
+  background-image: url(../assets/images/megacruiser/megacruiser-v4.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .mega-vert-five {
-  background-color: rgb(255, 200, 255);
+  background-image: url(../assets/images/megacruiser/megacruiser-v5.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .mega-vert-six {
-  background-color: rgb(255, 250, 255);
+  background-image: url(../assets/images/megacruiser/megacruiser-v6.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 /* MEGA Cruiser Horizontal*/
 
 .mega-hori-one {
-  background-color: rgb(255, 0, 255);
+  background-image: url(../assets/images/megacruiser/megacruiser-h1.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .mega-hori-two {
-  background-color: rgb(255, 50, 255);
+  background-image: url(../assets/images/megacruiser/megacruiser-h2.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .mega-hori-three {
-  background-color: rgb(255, 100, 255);
+  background-image: url(../assets/images/megacruiser/megacruiser-h3.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .mega-hori-four {
-  background-color: rgb(255, 150, 255);
+  background-image: url(../assets/images/megacruiser/megacruiser-h4.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .mega-hori-five {
-  background-color: rgb(255, 200, 255);
+  background-image: url(../assets/images/megacruiser/megacruiser-h5.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .mega-hori-six {
-  background-color: rgb(255, 250, 255);
+  background-image: url(../assets/images/megacruiser/megacruiser-h6.png);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
