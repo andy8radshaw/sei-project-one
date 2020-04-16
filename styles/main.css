@@ -43,7 +43,7 @@ h1 {
 .grid-wrapper {
   height: 55vh;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   /* border: 3px solid white; */
 }
@@ -58,7 +58,7 @@ h1 {
   justify-content: center;
   height: 500px;
   width: 500px;
-  margin: 50px;
+  margin: 20px;
   color: rgba(0, 0, 0, 0);
   background: rgb(39, 181, 218);
   background: linear-gradient(58deg, rgba(39, 181, 218, 1) 5%, rgba(17, 113, 221, 1) 19%, rgba(125, 184, 255, 1) 30%, rgba(6, 178, 201, 1) 54%, rgba(6, 26, 170, 1) 78%, rgba(64, 135, 215, 1) 89%, rgba(107, 124, 247, 1) 97%);
@@ -91,7 +91,7 @@ h1 {
   justify-content: center;
   height: 500px;
   width: 500px;
-  margin: 50px;
+  margin: 20px;
   color: rgba(0, 0, 0, 0);
   background: rgb(39, 181, 218);
   background: linear-gradient(263deg, rgba(39, 181, 218, 1) 5%, rgba(17, 113, 221, 1) 19%, rgba(125, 184, 255, 1) 30%, rgba(6, 178, 201, 1) 54%, rgba(6, 26, 170, 1) 78%, rgba(64, 135, 215, 1) 89%, rgba(107, 124, 247, 1) 97%);
@@ -123,8 +123,8 @@ h1 {
 
 .grid-player .ship-hit::before {
   content:'';
-  height: 60px;
-  width: 60px;
+  height: 50px;
+  width: 50px;
   position: absolute;
   background-image: url(../assets/images/explosion.png);
   background-repeat: no-repeat;
@@ -145,7 +145,7 @@ section.buttons {
   justify-content: center;
   align-items: center;
   height: 600px;
-  width: 240px;
+  /* width: 240px; */
   /* border: 3px solid white; */
 }
 

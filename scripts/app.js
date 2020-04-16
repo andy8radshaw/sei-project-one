@@ -39,6 +39,7 @@ function init() {
   let playerCurrentScore = 0
   let compCurrentScore = 0
   let playerWinner = false
+  let introPlaying = false
   const ships = [2, 3, 4, 5, 6]
   const ship = [
     {
@@ -487,6 +488,11 @@ function init() {
       ship[i].location = []
     }
     createAllShips()
+    if (introPlaying === false) {
+      audioPlayIntro()
+    }
+    introPlaying = true
+    
   }
 
   //* Instructions Button
@@ -527,6 +533,7 @@ function init() {
     playerCurrentScore = 0
     compCurrentScore = 0
     playerWinner = false
+    introPlaying = false
     audio.muted = false
     ship.forEach(ship => {
       ship.location = []
@@ -542,7 +549,6 @@ function init() {
     gameBoard.style.display = 'flex'
     gameMessage.innerHTML = 'INCOMING MESSAGE: <br/>I declare WAR. Arrange your ships and lets do BATTLE!...'
     shipSunkMessage.textContent = 'IMPORTANT MESSAGES: to follow...'
-    shipSunkMessage.textContent = ''
     gameMessages.style.display = 'flex'
   }
 
@@ -604,7 +610,7 @@ function init() {
               isPlaying = true
               droppingCompBombs()
             },1500)
-          }, 8000)
+          }, 5000)
         } else {
           if (playerWinner) return
           //removes and adds classes
@@ -622,7 +628,7 @@ function init() {
               droppingCompBombs()
             },1500)
             
-          }, 7500)
+          }, 4200)
           
         }
         isPlaying = true
@@ -659,8 +665,9 @@ function init() {
               cellsFull = false
               checkPlayerSunk(bombDropLocation)
               isPlaying = false
-              droppingPlayerBombs()
-            }, 6500)
+              
+            }, 4500)
+            droppingPlayerBombs()
           } else {
             audioCompMiss()
             setTimeout(() => {
@@ -670,8 +677,9 @@ function init() {
               // console.log(shotsTaken)
               cellsFull = false
               isPlaying = false
-              droppingPlayerBombs()
-            }, 5000)
+              
+            }, 4000)
+            droppingPlayerBombs()
           }
         }
       }
@@ -775,9 +783,9 @@ function init() {
             cellsFull = false
             checkPlayerSunk(targetedCompShotSelections[selection])
             isPlaying = false
-            droppingPlayerBombs()
-          }, 6500)
-          
+          }, 4500)
+          droppingPlayerBombs()
+        
         } else {
           audioCompMiss()
           setTimeout(() => {
@@ -788,8 +796,8 @@ function init() {
             //!add AUDIO HERE SPLASH
             cellsFull = false
             isPlaying = false
-            droppingPlayerBombs()
-          }, 5000)
+          }, 4000)
+          droppingPlayerBombs()
         }
       }
     }
@@ -832,22 +840,68 @@ function init() {
   //! AUDIO FUNCTIONS ---------------------------------------------------------------------
 
   function audioCompHit() {
-    audio.src = './assets/audio/comp-hit.wav'
-    audio.play()
+    const track = Math.floor(Math.random() * 3)
+    if (track === 0) {
+      audio.src = './assets/audio/ch-1.wav'
+      audio.play()
+    } else if (track === 1) {
+      audio.src = './assets/audio/ch-2.wav'
+      audio.play()
+    } else {
+      audio.src = './assets/audio/ch-3.wav'
+      audio.play()
+    }
   }
 
   function audioCompMiss() {
-    audio.src = './assets/audio/comp-miss.wav'
-    audio.play()
+    const track = Math.floor(Math.random() * 3)
+    if (track === 0) {
+      audio.src = './assets/audio/cm-1.wav'
+      audio.play()
+    } else if (track === 1) {
+      audio.src = './assets/audio/cm-2.wav'
+      audio.play()
+    } else {
+      audio.src = './assets/audio/cm-3.wav'
+      audio.play()
+    }
   }
 
   function audioPlayerHit() {
-    audio.src = './assets/audio/player-hit.wav'
-    audio.play()
+    const track = Math.floor(Math.random() * 3)
+    if (track === 0) {
+      audio.src = './assets/audio/ph-1.wav'
+      audio.play()
+    } else if (track === 1) {
+      audio.src = './assets/audio/ph-2.wav'
+      audio.play()
+    } else {
+      audio.src = './assets/audio/ph-3.wav'
+      audio.play()
+    }
   }
 
   function audioPlayerMiss() {
-    audio.src = './assets/audio/player-miss.wav'
+    const track = Math.floor(Math.random() * 3)
+    if (track === 0) {
+      audio.src = './assets/audio/pm-1.wav'
+      audio.play()
+    } else if (track === 1) {
+      audio.src = './assets/audio/pm-2.wav'
+      audio.play()
+    } else {
+      audio.src = './assets/audio/pm-3.wav'
+      audio.play()
+    }
+  }
+
+  function audioPlayIntro() {
+    audio.src = './assets/audio/intro-music.wav'
+    audio.play()
+  }
+
+  function audioPlayOutro() {
+    audio.src = './assets/audio/outro-music.wav'
     audio.play()
   }
 
@@ -865,13 +919,14 @@ function init() {
       compShipImages()
       playerWinner = true
       setTimeout(() =>{
+        audioPlayOutro()
         gameBoard.style.display = 'none'
         gameMessages.style.display = 'none'
         winnerBoard.style.display = 'flex'
         winnerMessage.textContent = 'You may have won this battle, but YOU WILL NOT WIN THE WAR!'
         playerCurrentScore++
         playerScore.textContent = `${playerCurrentScore}`
-      }, 5000)
+      }, 4000)
     } else if (ship[0].isSunk === true &&
     ship[1].isSunk === true &&
     ship[2].isSunk === true &&
@@ -898,6 +953,7 @@ function init() {
 
 
   createGridPlayer()
+  
 
   //! EVENT LISTENERS ------------------------------------------------------------------------
   randomizeShipsBtn.addEventListener('click', randomizeAllShips)
