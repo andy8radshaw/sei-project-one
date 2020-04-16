@@ -22,6 +22,7 @@ function init() {
   const playerScore = document.querySelector('#player-score')
   const compScore = document.querySelector('#comp-score')
   const audio = document.querySelector('#audio')
+  const audioMute = document.querySelector('#mute-audio')
 
 
   //* grid variables
@@ -281,6 +282,7 @@ function init() {
         }
       }
       compShip[shipIndex].location = currentShip //add current ship to the ship object
+      compShip[shipIndex].isVerticle = true
       for (let i = 0; i < compShip[shipIndex].location.length; i++) {
         cellsComp[compShip[shipIndex].location[i]].classList.add('comp-ship')
         //add index to reserved spaces array
@@ -318,6 +320,7 @@ function init() {
       }
       //add the current ship to the ship object
       compShip[shipIndex].location = currentShip
+      compShip[shipIndex].isVerticle = false
       for (let i = 0; i < compShip[shipIndex].size; i++) {
         cellsComp[compShip[shipIndex].location[i]].classList.add('comp-ship')
         reservedSpaces.push(compShip[shipIndex].location[i])
@@ -332,6 +335,7 @@ function init() {
     ships.forEach((currentValue, index) => {
       createCompShip(currentValue, index)
     })
+    compShipImages()
   }
 
 
@@ -394,9 +398,66 @@ function init() {
       cellsPlayer[ship[4].location[5]].classList.add('mega-hori-six')
     }
   }
-  
-  
 
+  //* Comp ship images
+  function compShipImages() {
+    if (compShip[0].isVerticle === true) {
+      cellsComp[compShip[0].location[0]].classList.add('destroyer-vert-one')
+      cellsComp[compShip[0].location[1]].classList.add('destroyer-vert-two')
+    } else {
+      cellsComp[compShip[0].location[0]].classList.add('destroyer-hori-one')
+      cellsComp[compShip[0].location[1]].classList.add('destroyer-hori-two')
+    }
+    if (compShip[1].isVerticle === true) {
+      cellsComp[compShip[1].location[0]].classList.add('submarine-vert-one')
+      cellsComp[compShip[1].location[1]].classList.add('submarine-vert-two')
+      cellsComp[compShip[1].location[2]].classList.add('submarine-vert-three')
+    } else {
+      cellsComp[compShip[1].location[0]].classList.add('submarine-hori-one')
+      cellsComp[compShip[1].location[1]].classList.add('submarine-hori-two')
+      cellsComp[compShip[1].location[2]].classList.add('submarine-hori-three')
+    }
+    if (compShip[2].isVerticle === true) {
+      cellsComp[compShip[2].location[0]].classList.add('carrier-vert-one')
+      cellsComp[compShip[2].location[1]].classList.add('carrier-vert-two')
+      cellsComp[compShip[2].location[2]].classList.add('carrier-vert-three')
+      cellsComp[compShip[2].location[3]].classList.add('carrier-vert-four')
+    } else {
+      cellsComp[compShip[2].location[0]].classList.add('carrier-hori-one')
+      cellsComp[compShip[2].location[1]].classList.add('carrier-hori-two')
+      cellsComp[compShip[2].location[2]].classList.add('carrier-hori-three')
+      cellsComp[compShip[2].location[3]].classList.add('carrier-hori-four')
+    }
+    if (compShip[3].isVerticle === true) {
+      cellsComp[compShip[3].location[0]].classList.add('battle-vert-one')
+      cellsComp[compShip[3].location[1]].classList.add('battle-vert-two')
+      cellsComp[compShip[3].location[2]].classList.add('battle-vert-three')
+      cellsComp[compShip[3].location[3]].classList.add('battle-vert-four')
+      cellsComp[compShip[3].location[4]].classList.add('battle-vert-five')
+    } else {
+      cellsComp[compShip[3].location[0]].classList.add('battle-hori-one')
+      cellsComp[compShip[3].location[1]].classList.add('battle-hori-two')
+      cellsComp[compShip[3].location[2]].classList.add('battle-hori-three')
+      cellsComp[compShip[3].location[3]].classList.add('battle-hori-four')
+      cellsComp[compShip[3].location[4]].classList.add('battle-hori-five')
+    }
+    if (compShip[4].isVerticle === true) {
+      cellsComp[compShip[4].location[0]].classList.add('mega-vert-one')
+      cellsComp[compShip[4].location[1]].classList.add('mega-vert-two')
+      cellsComp[compShip[4].location[2]].classList.add('mega-vert-three')
+      cellsComp[compShip[4].location[3]].classList.add('mega-vert-four')
+      cellsComp[compShip[4].location[4]].classList.add('mega-vert-five')
+      cellsComp[compShip[4].location[5]].classList.add('mega-vert-six')
+    } else {
+      cellsComp[compShip[4].location[0]].classList.add('mega-hori-one')
+      cellsComp[compShip[4].location[1]].classList.add('mega-hori-two')
+      cellsComp[compShip[4].location[2]].classList.add('mega-hori-three')
+      cellsComp[compShip[4].location[3]].classList.add('mega-hori-four')
+      cellsComp[compShip[4].location[4]].classList.add('mega-hori-five')
+      cellsComp[compShip[4].location[5]].classList.add('mega-hori-six')
+    }
+  }
+  
 
 
   //! BUTTON CONTROLLERS -------------------------------------------------------------------
@@ -466,6 +527,7 @@ function init() {
     playerCurrentScore = 0
     compCurrentScore = 0
     playerWinner = false
+    audio.muted = false
     ship.forEach(ship => {
       ship.location = []
       ship.hitLocation = []
@@ -479,10 +541,21 @@ function init() {
     winnerBoard.style.display = 'none'
     gameBoard.style.display = 'flex'
     gameMessage.innerHTML = 'INCOMING MESSAGE: <br/>I declare WAR. Arrange your ships and lets do BATTLE!...'
+    shipSunkMessage.textContent = 'IMPORTANT MESSAGES: to follow...'
     shipSunkMessage.textContent = ''
     gameMessages.style.display = 'flex'
   }
 
+
+  function toggleAudioMute() {
+    if (audio.muted === true) {
+      audio.muted = false
+      audioMute.classList.remove('muted')
+    } else {
+      audio.muted = true
+      audioMute.classList.add('muted')
+    }
+  }
 
 
 
@@ -495,8 +568,8 @@ function init() {
     // * Who goes first ------------------------
     function whoGoesFirst() {
       if (playerWinner) return
-      // const num = Math.floor(Math.random() * 2)
-      const num = 0
+      const num = Math.floor(Math.random() * 2)
+      // const num = 0
       if (num === 0) {
         gameMessage.textContent = 'YOUR TURN, Lets see what you\'ve got!'
 
@@ -789,13 +862,13 @@ function init() {
     compShip[2].isSunk === true &&
     compShip[3].isSunk === true &&
     compShip[4].isSunk === true) {
-      console.log('CONGRATS')
+      compShipImages()
       playerWinner = true
       setTimeout(() =>{
         gameBoard.style.display = 'none'
         gameMessages.style.display = 'none'
         winnerBoard.style.display = 'flex'
-        winnerMessage.textContent = 'Congratulations, you are the winner'
+        winnerMessage.textContent = 'You may have won this battle, but YOU WILL NOT WIN THE WAR!'
         playerCurrentScore++
         playerScore.textContent = `${playerCurrentScore}`
       }, 5000)
@@ -804,11 +877,10 @@ function init() {
     ship[2].isSunk === true &&
     ship[3].isSunk === true &&
     ship[4].isSunk === true) {
-      console.log('I WIN HAHAHAHAHAH')
       gameBoard.style.display = 'none'
       gameMessages.style.display = 'none'
       winnerBoard.style.display = 'flex'
-      winnerMessage.textContent = 'BETTER LUCK NEXT TIME PUNK'
+      winnerMessage.textContent = 'BETTER LUCK NEXT TIME, PUNK! Fancy getting DESTROYED again?!'
       compCurrentScore++
       compScore.textContent = `${compCurrentScore}`
     } else {
@@ -835,6 +907,7 @@ function init() {
   resetGameBtn.addEventListener('click', handleResetGame)
   closeWinnerBoard.addEventListener('click', handleWinnerClose)
   playAgainBtn.addEventListener('click', handleResetGame)
+  audioMute.addEventListener('click', toggleAudioMute)
 
 
 }
