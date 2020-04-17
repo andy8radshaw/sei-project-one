@@ -22,7 +22,8 @@ function init() {
   const playerScore = document.querySelector('#player-score')
   const compScore = document.querySelector('#comp-score')
   const audio = document.querySelector('#audio')
-  const audioMute = document.querySelector('#mute-audio')
+  const audioMuteBtn = document.querySelector('#mute-audio')
+  const buttonHit = document.querySelector('#button-hit')
 
 
   //* grid variables
@@ -467,6 +468,7 @@ function init() {
     if (isStartPressed) return
     isStartPressed = true
     isRandomPressed = true
+    buttonSoundOne()
     createGridComp()
     createAllCompShips()
     startGameActions()
@@ -474,8 +476,10 @@ function init() {
 
   //* Randomize ships button
   function randomizeAllShips() {
+
     if (isRandomPressed) return
     isStartPressed = false
+    buttonSoundTwo()
     //set reserved spaces back to an empty array for a new board of ships
     reservedSpaces = []
     const wholeGridCells = document.querySelectorAll('.whole-grid-player')
@@ -496,6 +500,7 @@ function init() {
 
   //* Instructions Button
   function handleInstructions() {
+    buttonSoundOne()
     gameBoard.style.display = 'none'
     gameMessages.style.display = 'none'
     instructionsBoard.style.display = 'flex'
@@ -503,6 +508,7 @@ function init() {
 
   //* Back to Game Button
   function handleBackToGame() {
+    buttonSoundTwo()
     instructionsBoard.style.display = 'none'
     gameBoard.style.display = 'flex'
     gameMessages.style.display = 'flex'
@@ -517,6 +523,7 @@ function init() {
 
   //* Reset game button on Game-Board and Play Again button on Winner-Board
   function handleResetGame() {
+    buttonSoundOne()
     cellsPlayer.forEach(cell => {
       cell.classList = 'whole-grid-player'
     })
@@ -533,8 +540,8 @@ function init() {
     compCurrentScore = 0
     playerWinner = false
     introPlaying = false
-    audio.muted = false
-    audioMute.classList.remove('muted')
+    
+    
     ship.forEach(ship => {
       ship.location = []
       ship.hitLocation = []
@@ -555,11 +562,15 @@ function init() {
 
   function toggleAudioMute() {
     if (audio.muted === true) {
+      buttonSoundOne()
       audio.muted = false
-      audioMute.classList.remove('muted')
+      buttonHit.muted = false
+      audioMuteBtn.classList.remove('muted')
     } else {
+      buttonSoundTwo()
       audio.muted = true
-      audioMute.classList.add('muted')
+      buttonHit.muted = true
+      audioMuteBtn.classList.add('muted')
     }
   }
 
@@ -904,6 +915,16 @@ function init() {
     audio.play()
   }
 
+  function buttonSoundOne() {
+    buttonHit.src = './assets/audio/btnhit1.wav'
+    buttonHit.play()
+  }
+
+  function buttonSoundTwo() {
+    buttonHit.src = './assets/audio/btnhit2.wav'
+    buttonHit.play()
+  }
+
 
 
   // ! DECLARING THE WINNER ---------------------------------------------------------------
@@ -955,7 +976,7 @@ function init() {
   resetGameBtn.addEventListener('click', handleResetGame)
   closeWinnerBoard.addEventListener('click', handleWinnerClose)
   playAgainBtn.addEventListener('click', handleResetGame)
-  audioMute.addEventListener('click', toggleAudioMute)
+  audioMuteBtn.addEventListener('click', toggleAudioMute)
 
 
 }
