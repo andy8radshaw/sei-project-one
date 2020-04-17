@@ -336,7 +336,6 @@ function init() {
     ships.forEach((currentValue, index) => {
       createCompShip(currentValue, index)
     })
-    compShipImages()
   }
 
 
@@ -535,6 +534,7 @@ function init() {
     playerWinner = false
     introPlaying = false
     audio.muted = false
+    audioMute.classList.remove('muted')
     ship.forEach(ship => {
       ship.location = []
       ship.hitLocation = []
@@ -562,7 +562,6 @@ function init() {
       audioMute.classList.add('muted')
     }
   }
-
 
 
 
@@ -942,13 +941,6 @@ function init() {
       return
     }
   }
-
-
-
-
-
-
-
 
 
 
