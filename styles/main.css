@@ -225,7 +225,7 @@ section.game-messages {
   background: radial-gradient(circle, rgba(138, 123, 111, 1) 0%, rgba(57, 53, 54, 1) 98%);
   font-size: 20px;
   color: greenyellow;
-  padding: 50px;
+  padding: 30px;
 }
 
 .ship-sunk-message {
@@ -242,6 +242,7 @@ section.game-messages {
   background: radial-gradient(circle, rgba(138, 123, 111, 1) 0%, rgba(57, 53, 54, 1) 98%);
   font-size: 20px;
   color: red;
+  padding: 30px;
 }
 
 /* Instructions Page */
@@ -552,5 +553,131 @@ div.winner-board {
   background-size: contain;
 }
 
-/* SEA keyframes */
 
+
+/* Media queries */
+
+
+
+@media (max-width:1400px) { 
+
+  .score-section {
+    font-size: 26px;
+  }
+
+  .grid-player {
+    height: 400px;
+    width: 400px;
+  }
+
+  .grid-comp {
+    height: 400px;
+    width: 400px;
+  }
+
+  .grid-comp div.comp-ship {
+    height: 40px;
+  width: 40px;
+  }
+
+  .grid-comp .ship-hit::before {
+    height: 40px;
+    width: 40px;
+  }
+
+  .grid-player .ship-hit::before {
+    height: 40px;
+    width: 40px;
+  }
+
+  div.instructions-board {
+    width: 600px;
+  }
+
+  ul {
+    font-size: 18px;
+    border: 30px outset rgb(30, 20, 30);
+  }
+
+  .game-message {
+    font-size: 16px;
+    border: 20px outset rgb(30, 20, 30);
+  }
+
+  .ship-sunk-message {
+    font-size: 16px;
+    border: 20px outset rgb(30, 20, 30);
+  }
+
+  button {
+    width: 150px;
+    font-size: 12px;
+  }
+
+}
+
+@media (max-width:1100px) { 
+
+  h1 {
+    font-size: 60px;
+  }
+
+  .score-section {
+    font-size: 24px;
+  }
+
+  .grid-player {
+    height: 320px;
+    width: 320px;
+  }
+
+  .grid-comp {
+    height: 320px;
+    width: 320px;
+  }
+
+  .grid-comp div.comp-ship {
+    height: 32px;
+  width: 32px;
+  }
+
+  .grid-comp .ship-hit::before {
+    height: 32px;
+    width: 32px;
+  }
+
+  .grid-player .ship-hit::before {
+    height: 32px;
+    width: 32px;
+  }
+
+  div.instructions-board {
+    width: 500px;
+  }
+
+  ul {
+    font-size: 14px;
+    border: 30px outset rgb(30, 20, 30);
+  }
+
+  .game-message {
+    font-size: 14px;
+    border: 15px outset rgb(30, 20, 30);
+  }
+
+  .ship-sunk-message {
+    font-size: 14px;
+    border: 15px outset rgb(30, 20, 30);
+  }
+
+  section.buttons {
+    height: 480px;
+  }
+
+  button {
+    margin: 10px;
+    width: 120px;
+    font-size: 10px;
+  }
+
+}
