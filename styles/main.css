@@ -589,11 +589,11 @@ div.winner-board {
   }
 
   div.instructions-board {
-    width: 600px;
+    width: 800px;
   }
 
   ul {
-    font-size: 18px;
+    font-size: 16px;
     border: 30px outset rgb(30, 20, 30);
   }
 
@@ -646,11 +646,11 @@ div.winner-board {
   }
 
   div.instructions-board {
-    width: 600px;
+    width: 800px;
   }
 
   ul {
-    font-size: 18px;
+    font-size: 16px;
     border: 30px outset rgb(30, 20, 30);
   }
 
@@ -706,11 +706,11 @@ div.winner-board {
   }
 
   div.instructions-board {
-    width: 500px;
+    width: 700px;
   }
 
   ul {
-    font-size: 14px;
+    font-size: 12px;
     border: 30px outset rgb(30, 20, 30);
   }
 
