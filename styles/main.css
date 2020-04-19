@@ -557,6 +557,61 @@ div.winner-board {
 
 /* Media queries */
 
+@media (max-height:900px) { 
+
+  .score-section {
+    font-size: 26px;
+  }
+
+  .grid-player {
+    height: 400px;
+    width: 400px;
+  }
+
+  .grid-comp {
+    height: 400px;
+    width: 400px;
+  }
+
+  .grid-comp div.comp-ship {
+    height: 40px;
+  width: 40px;
+  }
+
+  .grid-comp .ship-hit::before {
+    height: 40px;
+    width: 40px;
+  }
+
+  .grid-player .ship-hit::before {
+    height: 40px;
+    width: 40px;
+  }
+
+  div.instructions-board {
+    width: 600px;
+  }
+
+  ul {
+    font-size: 18px;
+    border: 30px outset rgb(30, 20, 30);
+  }
+
+  .game-message {
+    font-size: 16px;
+    border: 20px outset rgb(30, 20, 30);
+  }
+
+  .ship-sunk-message {
+    font-size: 16px;
+    border: 20px outset rgb(30, 20, 30);
+  }
+
+  button {
+    width: 150px;
+    font-size: 12px;
+  }
+}
 
 
 @media (max-width:1280px) { 
@@ -613,7 +668,6 @@ div.winner-board {
     width: 150px;
     font-size: 12px;
   }
-
 }
 
 @media (max-width:1100px) { 
