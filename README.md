@@ -181,7 +181,7 @@ function createShip(numOfSquaresToFill, shipIndex) {
 
 # Wins and Blockers
 - The biggest challenge and blocker for me was getting the ships to place randomly on the grid without overlapping each other. Once I understood the idea of creating a potential ship location in an array and then checking this against all current ship locations then I was able to move past this point. But this did take me a long while to work out. 
-- A big win for me in this project was my increased level of JS and how to apply code in an ordered manner. Using higher level functionality and 
+- A big win for me in this project was my increased understanding of JavaScript. The challenge of building a game really took me out of my comfort zone and I am very happy with the end result.
 
 
 # Future content and improvements:
