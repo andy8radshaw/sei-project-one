@@ -10,6 +10,7 @@ Table of Contents:
 - Bugs
 - Wins and Blockers
 - Future Content and Improvements
+- Key Learnings
 
 
 # Project Overview
@@ -175,8 +176,8 @@ function createShip(numOfSquaresToFill, shipIndex) {
 
 
 # Bugs:
-- currently the computer has basic intelligence. It will check if its previous shot was a hit and if so, take its next shot around that cell. however, if it then misses it will take its next shot at random. Idealy I would like the computer, once it has made a hit, to have the intelligence to completely sink the ship in all directions before moving on to its next random shot. 
-- Throughout the build of the project there were a number of bugs experienced. however, by keeping the mindset to create a simple game and trying not to over-complicate things as well as spending lots of time testing has helped me iron out all smaller bugs and create a simple and fun game
+- Currently the computer has basic intelligence. It will check if its previous shot was a hit and if so, take its next shot around that cell. however, if it then misses it will take its next shot at random. Idealy I would like the computer, once it has made a hit, to have the intelligence to completely sink the ship in all directions before moving on to its next random shot. 
+- Throughout the build of the project there were a number of bugs experienced. however, by keeping the mindset to create a simple game and trying not to over-complicate things as well as spending lots of time testing has helped me iron out all smaller bugs and create a simple and fun game.
 
 
 # Wins and Blockers
@@ -186,12 +187,13 @@ function createShip(numOfSquaresToFill, shipIndex) {
 
 # Future content and improvements:
 - Increased Computer intelligence
-- differing levels of difficulty
-- the ability for players to move ships and place them where they want as well as the random button currently implemented
+- Differing levels of difficulty
+- The ability for players to move ships and place them where they want as well as the random button currently implemented
 - Add a multi-player feature so two players could compete against each other
-- explosions and misses to be animated
-- the grids to be animated
-- animated bombs across the page from one grid to the other
-- more concise and DRY code in certain areas
+- Explosions and misses to be animated
+- The grids to be animated
+- Animated bombs across the page from one grid to the other
+- More concise and DRY code in certain areas
 
-- I have learned from this project that I need to do more refactoring of my code as I am working on the project. I tried to write understandable, clean and well annotated code, however, there are certainly sections in this project where I didn't have time to refactor at all and it was a case of adding the working code and getting the job done and moving on. 
+# Key Learnings
+I have learned from this project that I need to do more refactoring of my code as I am working on the project. At the time I tried to write understandable, clean and well annotated code, however, there are certainly sections in this project where I didn't have time to refactor at all and it was a case of adding the working code and getting the job done and moving on to the next feature. 
